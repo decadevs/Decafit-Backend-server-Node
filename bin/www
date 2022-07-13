@@ -1,14 +1,14 @@
 #!/usr/bin/env node
+/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable no-undef */
 
 /**
  * Module dependencies.
  */
 
-import app from '../dist/app';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-var debug = require('debug')('decafit:server');
-import { createServer } from 'http';
+var app = require('../dist/app').default;
+var debug = require('debug')('008-setup:server');
+var http = require('http');
 
 /**
  * Get port from environment and store in Express.
@@ -21,7 +21,7 @@ app.set('port', port);
  * Create HTTP server.
  */
 
-var server = createServer(app);
+var server = http.createServer(app);
 
 /**
  * Listen on provided port, on all network interfaces.
