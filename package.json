@@ -10,7 +10,7 @@
     "dev:build-watch": "yarn tsc -w",
     "eslint": "./node_modules/eslint/bin/eslint.js --ext .jsx,.js,.ts,.tsx ./src",
     "lint-fix": "yarn eslint -- --fix",
-    "lint": "yarn eslint && npm run ts",
+    "lint": "yarn eslint && yarn ts",
     "test": "jest --detectOpenHandles --colors --notify --verbose --ci",
     "coverage": "yarn test -- --coverage --watchAll=false"
   },
