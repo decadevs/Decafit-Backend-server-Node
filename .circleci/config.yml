@@ -27,7 +27,7 @@ jobs:
           # If you are using yarn, change the line below from "npm" to "yarn"
           pkg-manager: yarn
       - run:
-          name: Run tests
+          name: Run lint and tests
           command: yarn lint && yarn test
 
 workflows:
