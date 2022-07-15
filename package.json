@@ -8,10 +8,10 @@
     "dev:run": "NODE_ENV=development yarn nodemon",
     "dev:build": "yarn tsc",
     "dev:build-watch": "yarn tsc -w",
-    "eslint": "./node_modules/eslint/bin/eslint.js --ext .jsx,.js,.ts,.tsx ./src",
+    "eslint": "./node_modules/eslint/bin/eslint.js --ext .ts ./src",
     "lint-fix": "yarn eslint -- --fix",
-    "lint": "yarn eslint && yarn ts",
-    "test": "jest --detectOpenHandles --colors --notify --verbose --ci",
+    "lint": "yarn eslint && yarn dev:build",
+    "test": "jest --detectOpenHandles --colors --verbose --ci",
     "coverage": "yarn test -- --coverage --watchAll=false "
   },
   "dependencies": {
@@ -60,7 +60,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint"
+      "pre-commit": "yarn lint && yarn test"
     }
   }
 }
