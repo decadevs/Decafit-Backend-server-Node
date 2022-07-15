@@ -12,7 +12,7 @@
     "lint-fix": "yarn eslint -- --fix",
     "lint": "yarn eslint && yarn ts",
     "test": "jest --detectOpenHandles --colors --notify --verbose --ci",
-    "coverage": "yarn test -- --coverage --watchAll=false"
+    "coverage": "yarn test -- --coverage --watchAll=false "
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
