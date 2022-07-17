@@ -7,7 +7,12 @@ require('dotenv').config();
 var app = require('../dist/app').default;
 var debug = require('debug')('decafit:server');
 var http = require('http');
+const mongoose = require('mongoose');
 
+const url = process.env.MONGODB_URL
+//Database Connection
+// eslint-disable-next-line no-console
+mongoose.connect(url).then(() => console.log('Database Connected')).catch((error) => console.log(error));
 /**
  * Get port from environment and store in Express.
  */
