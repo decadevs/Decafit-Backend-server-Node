@@ -1,13 +1,11 @@
 import 'dotenv/config';
 import app from '../app';
 import supertest from 'supertest';
-import { dbConnect, dbDisconnect } from '../config/dbHandler-test';
 import { User } from '../model/userModel';
 import bcrypt from 'bcryptjs';
 const request = supertest(app);
 
 beforeAll(async () => {
-  await dbConnect()
   // Register
   let register = await User.create({
     fullName: 'Damilola Babalola',
@@ -18,7 +16,6 @@ beforeAll(async () => {
   register.active = true;
   register.save();
 });
-afterAll(async () => await dbDisconnect());
 jest.setTimeout(30000);
 
 //  Login
