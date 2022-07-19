@@ -45,6 +45,6 @@ module.exports = {
     'eol-last': 0,
     'no-duplicate-imports': 0,
     'camelcase': 'off',
-    'no-console': ['error', {'allow': ['warn', 'error', 'info']}]
+    // 'no-console': ['error', {'allow': ['warn', 'error', 'info']}]
   }
 };
