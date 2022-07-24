@@ -1,5 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { Types } from 'mongoose';
 export interface UserType extends mongoose.Document {
+  id:Types.ObjectId
   fullName: string;
   email: string;
   phoneNumber: string;
@@ -8,7 +9,7 @@ export interface UserType extends mongoose.Document {
   googleId: string;
   appleId:string;
   role: string;
-  active: boolean;
+  verified: boolean;
 }
 
 const userSchema = new mongoose.Schema({
@@ -20,7 +21,7 @@ const userSchema = new mongoose.Schema({
   googleId: { type: String },
   appleId:{ type: String },
   role: { type: String },
-  active: { type: Boolean, default: false },
+  verified: { type: Boolean, default: false },
  
 }, {
   timestamps: true,

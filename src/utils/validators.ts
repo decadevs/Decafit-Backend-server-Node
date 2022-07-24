@@ -9,12 +9,12 @@ interface createUserLoginInput {
   email: string;
   password: string;
 }
-interface Obj {
+interface InputObj {
     errors:{ [key: string]: string }
     valid:boolean
 }
-// User validation
-export const validateRegisterInput = (userObj: createUserRegisterInput):Obj => {
+
+export const validateRegisterInput = (userObj: createUserRegisterInput):InputObj => {
   const errors: { [key: string]: string } = {};
   if (userObj.fullName.trim() === '') {
     errors.fullName = 'fullname must not be empty';
@@ -41,8 +41,7 @@ export const validateRegisterInput = (userObj: createUserRegisterInput):Obj => {
   };
 };
 
-// Login validation
-export const validateLoginInput = (userObj: createUserLoginInput): Obj => {
+export const validateLoginInput = (userObj: createUserLoginInput): InputObj => {
   const errors: { [key: string]: string } = {};
   if (userObj.email.trim() === '') {
      errors.email = 'Email must not be empty';

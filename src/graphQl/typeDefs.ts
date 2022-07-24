@@ -18,7 +18,7 @@ const typeDefs = gql`
      token:String!
  }
 
- type AllUsers{
+ type User{
      id:ID!
      fullName:String!
      phoneNumber: String!
@@ -29,7 +29,7 @@ const typeDefs = gql`
  type Token{
   token:String!
   message:String!
-  active:Boolean!
+  verified:Boolean!
  }
 
  input RegisterInput{
@@ -44,12 +44,12 @@ input VerifyInput{
 }
 
 type Query{
-    getAllUsersFromDb:[AllUsers]!
-    getUserByIdFromDb: AllUsers!
+    users:[User]!
+    userById: User!
 }
 
  type Mutation{
-     register(user:RegisterInput):UserReg!
+     register(user:RegisterInput):User!
      verify(user:VerifyInput):Token!
      login(email:String!, password:String!):UserLogin!
  }
