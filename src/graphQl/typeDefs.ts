@@ -6,6 +6,7 @@ const typeDefs = gql`
      id:ID!
      fullName:String!
      email:String!
+     message:String!
      createdAt:String!
  }
 
@@ -50,7 +51,7 @@ type Query{
 }
 
  type Mutation{
-     register(user:RegisterInput):User!
+     register(user:RegisterInput):UserReg!
      verify(user:VerifyInput):Token!
      login(email:String!, password:String!):UserLogin!
  }
