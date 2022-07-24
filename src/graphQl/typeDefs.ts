@@ -13,6 +13,7 @@ const typeDefs = gql`
      id:ID!
      fullName:String!
      email:String!
+     phoneNumber: String!
      createdAt:String!
      message:String!
      token:String!
