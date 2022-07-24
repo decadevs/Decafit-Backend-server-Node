@@ -10,14 +10,41 @@ import {
 } from 'apollo-server-core';
 import typeDefs from './graphQl/typeDefs'
 import { indexresolver } from './graphQl/resolvers/Index'
+import cors from 'cors';
+import passport from 'passport';
+import session from 'express-session';
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const MemoryStore = require('memorystore')(session)
+import ssoRouter from './routes/sso-auth';
+import indexRouter from './routes/index';
 
 const app = express();
+
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+require('./config/passport-social-setup')(passport);
+
+app.use(session({
+  cookie: { maxAge: 86400000 },
+  store: new MemoryStore({
+    checkPeriod: 86400000 // prune expired entries every 24h
+  }),
+  resave: true,
+  saveUninitialized: true,
+  secret: process.env.SESSION_SECRET as string,
+}))
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(cors());
 
 app.use(logger('dev'));
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+
+app.use('/', indexRouter);
+app.use('/auth', ssoRouter);
 
 async function startApolloServer(){
   const apolloServer = new ApolloServer({

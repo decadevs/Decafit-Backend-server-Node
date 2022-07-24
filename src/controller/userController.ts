@@ -1,4 +1,5 @@
 import bcrypt from 'bcryptjs';
+import {Request, Response} from 'express'
 import { User } from '../model/userModel';
 import { UserInputError } from 'apollo-server-express';
 import { validateRegisterInput, validateLoginInput } from '../utils/validators';
@@ -168,4 +169,28 @@ try {
 } catch (err) {
   throw new Error(`Internal server Error ${err}`)
 }
+}
+
+// SSO PASSPORT ROUTE CONTROLLER
+export async function loginSuccess(req: Request, res: Response): Promise<void> {
+  try {
+    const { _id, email } = req.user as { [key: string]: string };
+    const token = generateToken({ _id, email });
+    res.status(200).json({
+      message: 'Login sucessful',
+      token: token,
+    });
+  } catch (err) {
+    throw new Error(`${err}`)
+  }
+}
+
+export async function loginFail(req: Request, res: Response): Promise<void> {
+   try {
+    res.status(200).json({
+      message: 'User authentication failed',
+    });
+   } catch (err){
+     throw new Error(`${err}`)
+   }
 }

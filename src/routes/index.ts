@@ -1,10 +1,13 @@
-import { Router,Request, Response } from 'express';
+import express from 'express';
+import {
+  loginSuccess,
+  loginFail
+} from '../controller/userController';
 
-const router = Router();
+const router = express.Router();
 
-/* GET home page. */
-router.get('/', function (_req:Request , res:Response) {
-  res.json({ title: 'Basic Express App' });
-});
+router.get('/', loginSuccess);
 
-export default router;
+router.get('/fail-login', loginFail);
+
+export default router
