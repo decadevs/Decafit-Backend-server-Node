@@ -17,6 +17,8 @@ import session from 'express-session';
 const MemoryStore = require('memorystore')(session)
 import ssoRouter from './routes/sso-auth';
 import indexRouter from './routes/index';
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express();
 

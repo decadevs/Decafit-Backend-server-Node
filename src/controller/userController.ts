@@ -1,6 +1,6 @@
 import bcrypt from 'bcryptjs';
 import {Request, Response} from 'express'
-import { User } from '../model/userModel';
+import { User,UserType  } from '../model/userModel';
 import { UserInputError } from 'apollo-server-express';
 import { validateRegisterInput, validateLoginInput } from '../utils/validators';
 import mailer from '../middlewares/sendMail';
@@ -26,23 +26,20 @@ interface createVerify{
     token:string;
 }
     // Get all users 
-
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function getAllUsers():Promise<any>{
+export async function getAllUsers():Promise<Array<UserType>>{
+  let data: Array<UserType> = [];
     try {
-        const data = await User.find({});
-        return {
-        data,
-        }
+         data = await User.find() 
     } catch (err){
         throw new Error('User not found');
     }
+    return data
 }
 
 // Get all users by ID
-export async function getUserById(user:string):Promise<unknown>{
+export async function getUserById(id:string):Promise<unknown>{
     try {
-        const singleUser =await User.findOne({_id: user})
+        const singleUser =await User.findOne({_id: id})
         if (singleUser){
             return singleUser
         } else {
@@ -52,10 +49,10 @@ export async function getUserById(user:string):Promise<unknown>{
        throw new Error('Internal server Error')
     }
 }
-///// User Registration ////////
+
 export async function signUp(user: createUserInput): Promise<unknown> {
   try {
-    //Validate user data
+
   const { valid, errors } = validateRegisterInput(user);
   if (!valid) {
     throw new UserInputError('Errors', { errors });
@@ -92,12 +89,11 @@ export async function signUp(user: createUserInput): Promise<unknown> {
   });
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const res: any = await newUser.save();
+  const res: any    = await newUser.save();
    const { _id: id } = res;
   const payload = { id }
   const token = jwt.sign(payload, jwtsecret, { expiresIn: '30mins' });
   //Compose an email
-  //const link = `${process.env.FontEndUrl}/users/verify/${token}`;
   const html = template(token);
   // Send email
   await mailer.sendEmail(fromUser, user.email as string, 'Please verify your email!', html);
@@ -142,6 +138,7 @@ try {
   if (!valid) {
     throw new UserInputError('Errors', { errors });
   }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const findUser:any = await User.findOne({ email: loginuser.email });
     const { _id } = findUser;

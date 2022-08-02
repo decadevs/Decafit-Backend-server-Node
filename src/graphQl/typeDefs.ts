@@ -5,6 +5,7 @@ const typeDefs = gql`
  type UserReg{
      id:ID!
      fullName:String!
+     phoneNumber:String!
      email:String!
      message:String!
      createdAt:String!
@@ -19,6 +20,7 @@ const typeDefs = gql`
      message:String!
      token:String!
  }
+
 
  type User{
      id:ID!
@@ -41,19 +43,56 @@ const typeDefs = gql`
   password: String!
  }
 
+input WorkoutInput{
+  sets: Int!
+  title: String!
+  totalCalories: Int!
+  reps: Int!
+  backgroundImage:String!
+
+}
+
 input VerifyInput{
   token:String!
 }
 
+type WorkOut {
+  id:ID!
+  sets: Int!
+  title: String!
+  totalCalories: Int!
+  reps: Int!
+  backgroundImage:String!
+  createdAt:String!
+}
+
+type deletedResponse{
+     msg:String!
+ }
+
+
+type WorkOutCreated {
+  id:ID!
+  sets: Int!
+  title: String!
+  totalCalories: Int!
+  reps: Int!
+  backgroundImage:String!
+  createdAt:String!
+}
+
 type Query{
     users:[User]!
-    userById: User!
+    user(id:ID!): User!
+    workouts:[WorkOut]!
 }
 
  type Mutation{
      register(user:RegisterInput):UserReg!
      verify(user:VerifyInput):Token!
      login(email:String!, password:String!):UserLogin!
+     createWorkout(input:WorkoutInput):WorkOut!
+     deleteWorkout(id:ID!):deletedResponse!
  }
 `
 export default typeDefs;
