@@ -51,7 +51,7 @@ export async function getUserById(user:string):Promise<unknown>{
        throw new Error('Internal server Error')
     }
 }
-///// User Registration ////////
+
 export async function signUp(user: createUserInput): Promise<unknown> {
   try {
     //Validate user data
