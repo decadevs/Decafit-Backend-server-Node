@@ -29,7 +29,7 @@ const userresolvers = {
             context:{ req: { headers: { authorization: string; }; }; }):Promise<unknown>=>{
             newContext(context)
             const res = await getAllUsers()
-             return res.data
+             return res
         },
         userById:async (_:unknown,args:{id:string},
             context:{ req: { headers: { authorization: string; }; }; }):Promise<unknown> => {

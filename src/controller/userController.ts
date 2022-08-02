@@ -1,5 +1,5 @@
 import bcrypt from 'bcryptjs';
-import { User } from '../model/userModel';
+import { User,UserType } from '../model/userModel';
 import { UserInputError } from 'apollo-server-express';
 import { validateRegisterInput, validateLoginInput } from '../utils/validators';
 import mailer from '../middlewares/sendMail';
@@ -24,19 +24,16 @@ interface createdLoginUserInput {
 interface createVerify{
     token:string;
 }
-    // Get all users 
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export async function getAllUsers():Promise<any>{
-    try {
-        const data = await User.find({});
-        return {
-        data,
-        }
-    } catch (err){
-        throw new Error('User not found');
-    }
-}
+export async function getAllUsers():Promise<Array<UserType>>{
+  let data: Array<UserType> = [];
+  try {
+       data = await User.find() 
+  } catch (err){
+      throw new Error('User not found');
+  }
+  return data
+  }
 
 // Get all users by ID
 export async function getUserById(user:string):Promise<unknown>{
