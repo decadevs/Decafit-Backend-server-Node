@@ -1,8 +1,12 @@
 import { AuthenticationError } from 'apollo-server-errors';
 import jwt from 'jsonwebtoken';
+import { ObjectId } from 'mongoose';
 const secret = process.env.JWT_SECRET as string;
 
-export const newContext = (context: { req: { headers: { authorization: string } } }):string=>{
+interface newUser{
+    _id:ObjectId
+}
+export const newContext = (context: { req: { headers: { authorization: string } } }):newUser=>{
  const authHeader = context.req.headers.authorization;
  if (authHeader){
      //Bearer ...
@@ -10,7 +14,7 @@ export const newContext = (context: { req: { headers: { authorization: string } 
      if (token){
          try {
            const user = jwt.verify(token,secret) ;
-           return user as string;
+           return user as newUser;
          } catch (err){
              throw new  AuthenticationError('Invalid/Expired token')
          }

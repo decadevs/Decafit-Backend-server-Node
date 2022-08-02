@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
-import { User,UserType } from '../model/userModel';
+import {Request, Response} from 'express'
+import { User,UserType  } from '../model/userModel';
 import { UserInputError } from 'apollo-server-express';
 import { validateRegisterInput, validateLoginInput } from '../utils/validators';
 import mailer from '../middlewares/sendMail';
@@ -24,38 +25,41 @@ interface createdLoginUserInput {
 interface createVerify{
     token:string;
 }
-
+    // Get all users 
 export async function getAllUsers():Promise<Array<UserType>>{
   let data: Array<UserType> = [];
-  try {
-       data = await User.find() 
-  } catch (err){
-      throw new Error('User not found');
-  }
-  return data
-  }
-
-// Get all users by ID
-export async function getUserById(id:string):Promise<unknown>{
-  let data: UserType;
     try {
-      data = await User.findById(id._id) || {} as UserType; 
-      //! if no user found by a given Id, return empty user object
-        // const singleUser =await User.findOne({_id: user})
-        // if (singleUser){
-        //     return singleUser
-        // } else {
-        //     throw new Error('post not found')
-        // }
+         data = await User.find() 
     } catch (err){
-       throw new Error('Internal server Error')
+        throw new Error('User not found');
     }
     return data
 }
 
+// Get all users by ID
+export async function getUserById(id:string):Promise<UserType>{
+  // let user: UserType;
+  //    try {
+  //     user = await User.findById(id) || {} as UserType;
+  //    } catch (error) {
+  //     throw new Error('Internal server Error')
+  //    }
+  //    return user;
+    try {
+        const singleUser =await User.findOne({_id: id})
+        if (singleUser){
+            return singleUser
+        } else {
+            throw new Error('post not found')
+        }
+    } catch (err){
+       throw new Error('Internal server Error')
+    }
+}
+
 export async function signUp(user: createUserInput): Promise<unknown> {
   try {
-    //Validate user data
+
   const { valid, errors } = validateRegisterInput(user);
   if (!valid) {
     throw new UserInputError('Errors', { errors });
@@ -91,12 +95,12 @@ export async function signUp(user: createUserInput): Promise<unknown> {
     createdAt: new Date().toISOString(),
   });
 
-  const res: UserType = await newUser.save();
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const res: any    = await newUser.save();
    const { _id: id } = res;
   const payload = { id }
   const token = jwt.sign(payload, jwtsecret, { expiresIn: '30mins' });
   //Compose an email
-  //const link = `${process.env.FontEndUrl}/users/verify/${token}`;
   const html = template(token);
   // Send email
   await mailer.sendEmail(fromUser, user.email as string, 'Please verify your email!', html);
@@ -141,8 +145,9 @@ try {
   if (!valid) {
     throw new UserInputError('Errors', { errors });
   }
+
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const findUser:any= await User.findOne({ email: loginuser.email });
+  const findUser:any = await User.findOne({ email: loginuser.email });
     const { _id } = findUser;
     const token = generateToken({ _id});
    
@@ -168,4 +173,28 @@ try {
 } catch (err) {
   throw new Error(`Internal server Error ${err}`)
 }
+}
+
+// SSO PASSPORT ROUTE CONTROLLER
+export async function loginSuccess(req: Request, res: Response): Promise<void> {
+  try {
+    const { _id, email } = req.user as { [key: string]: string };
+    const token = generateToken({ _id, email });
+    res.status(200).json({
+      message: 'Login sucessful',
+      token: token,
+    });
+  } catch (err) {
+    throw new Error(`${err}`)
+  }
+}
+
+export async function loginFail(req: Request, res: Response): Promise<void> {
+   try {
+    res.status(200).json({
+      message: 'User authentication failed',
+    });
+   } catch (err){
+     throw new Error(`${err}`)
+   }
 }
