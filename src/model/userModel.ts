@@ -1,6 +1,8 @@
 import mongoose, { Types } from 'mongoose';
 export interface UserType extends mongoose.Document {
-  id:Types.ObjectId
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  // _doc:any,
+  _id?:Types.ObjectId,
   fullName: string;
   email: string;
   phoneNumber: string;

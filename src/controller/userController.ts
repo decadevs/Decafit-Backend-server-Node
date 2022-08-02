@@ -37,16 +37,20 @@ export async function getAllUsers():Promise<Array<UserType>>{
 
 // Get all users by ID
 export async function getUserById(user:string):Promise<unknown>{
+  let data: UserType;
     try {
-        const singleUser =await User.findOne({_id: user})
-        if (singleUser){
-            return singleUser
-        } else {
-            throw new Error('post not found')
-        }
+      data = await User.findById(user._id) || {} as UserType; 
+      //! if no user found by a given Id, return empty user object
+        // const singleUser =await User.findOne({_id: user})
+        // if (singleUser){
+        //     return singleUser
+        // } else {
+        //     throw new Error('post not found')
+        // }
     } catch (err){
        throw new Error('Internal server Error')
     }
+    return data
 }
 
 export async function signUp(user: createUserInput): Promise<unknown> {
@@ -87,8 +91,7 @@ export async function signUp(user: createUserInput): Promise<unknown> {
     createdAt: new Date().toISOString(),
   });
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const res: any = await newUser.save();
+  const res: UserType = await newUser.save();
    const { _id: id } = res;
   const payload = { id }
   const token = jwt.sign(payload, jwtsecret, { expiresIn: '30mins' });
@@ -139,7 +142,7 @@ try {
     throw new UserInputError('Errors', { errors });
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const findUser:any = await User.findOne({ email: loginuser.email });
+  const findUser:any= await User.findOne({ email: loginuser.email });
     const { _id } = findUser;
     const token = generateToken({ _id});
    
