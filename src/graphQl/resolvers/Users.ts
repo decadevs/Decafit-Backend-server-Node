@@ -33,9 +33,9 @@ const userresolvers = {
         },
         userById:async (_:unknown,args:{id:string},
             context:{ req: { headers: { authorization: string; }; }; }):Promise<unknown> => {
-            const user = newContext(context)
-            // const id = args.id
-            return await getUserById(user);
+                newContext(context)
+                const id = args.id
+               return await getUserById(id);
         }
     },
     Mutation :{

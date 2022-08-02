@@ -36,10 +36,10 @@ export async function getAllUsers():Promise<Array<UserType>>{
   }
 
 // Get all users by ID
-export async function getUserById(user:string):Promise<unknown>{
+export async function getUserById(id:string):Promise<unknown>{
   let data: UserType;
     try {
-      data = await User.findById(user._id) || {} as UserType; 
+      data = await User.findById(id._id) || {} as UserType; 
       //! if no user found by a given Id, return empty user object
         // const singleUser =await User.findOne({_id: user})
         // if (singleUser){
