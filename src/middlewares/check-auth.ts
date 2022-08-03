@@ -7,7 +7,6 @@ interface newUser{
 export const newContext = (context: { req: { headers: { authorization: string } } }):newUser=>{
  const authHeader = context.req.headers.authorization;
  if (authHeader){
-     //Bearer ...
      const token = authHeader.split('Bearer ')[1];
      if (token){
          try {

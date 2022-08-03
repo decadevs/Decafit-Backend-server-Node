@@ -2,13 +2,14 @@ import {gql} from 'apollo-server-express'
 
 const typeDefs = gql`
 
- type UserReg{
+ type UserRegistration{
      id:ID!
      fullName:String!
      email:String!
+     phoneNumber: String!
      message:String!
-     createdAt:String!
  }
+ 
 
  type UserLogin{
      id:ID!
@@ -28,12 +29,6 @@ const typeDefs = gql`
      createdAt:String!
  }
 
- type Token{
-  token:String!
-  message:String!
-  verified:Boolean!
- }
-
  input RegisterInput{
   fullName: String!
   email: String!
@@ -41,19 +36,19 @@ const typeDefs = gql`
   password: String!
  }
 
-input VerifyInput{
-  token:String!
-}
+ input LoginInput{
+  email:String! 
+  password:String!
+ }
 
 type Query{
-    users:[User]!
-    userById: User!
+  users:[User]!
+    user(id:ID!): User!
 }
 
  type Mutation{
-     register(user:RegisterInput):UserReg!
-     verify(user:VerifyInput):Token!
-     login(email:String!, password:String!):UserLogin!
+     register(user: RegisterInput): UserRegistration!
+     login(user: LoginInput): UserLogin!
  }
 `
 export default typeDefs;

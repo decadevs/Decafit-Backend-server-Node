@@ -1,55 +1,52 @@
-import {signUp,userSignIn,verifyUser, getAllUsers,getUserById} from '../../controller/userController'
-import {newContext} from '../../middlewares/check-auth'
-interface createUserRegisterInput{
-    fullName:string
-    email: string
-    phoneNumber:string
-    password:string
-  
+import { signUp, userSignIn, getAllUsers, getUserById } from '../../controller/userController';
+import { newContext } from '../../middlewares/check-auth';
+interface CreateUserRegisterInput {
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+  password: string;
+}
+interface ArgsForCreateRegisterUser {
+  user: CreateUserRegisterInput;
 }
 
-interface CreateToken{
-    token:string
+interface CreateUserLoginInput {
+  email: string;
+  password: string;
 }
-interface argsForToken{
-    user :CreateToken
-}
-interface argsForCreateRegisterUser{
-    user:createUserRegisterInput
-}
-
-interface createUserLoginInput{
-    email:string
-    password:string
-
+interface ArgsForLoginUser {
+  user: CreateUserLoginInput;
 }
 const userresolvers = {
-    Query:{
-        users:async (_:unknown, args:argsForCreateRegisterUser,
-            context:{ req: { headers: { authorization: string; }; }; }):Promise<unknown>=>{
-            newContext(context)
-            const res = await getAllUsers()
-             return res
-        },
-        userById:async (_:unknown,args:{id:string},
-            context:{ req: { headers: { authorization: string; }; }; }):Promise<unknown> => {
-                newContext(context)
-                const id = args.id
-               return await getUserById(id);
-        }
+  Query: {
+    users: async (
+      _: unknown,
+      args: ArgsForCreateRegisterUser,
+      context: { req: { headers: { authorization: string } } },
+    ): Promise<unknown> => {
+      newContext(context);
+      const res = await getAllUsers();
+      return res;
     },
-    Mutation :{
-         async login(_:unknown, args: createUserLoginInput):Promise<unknown>{
-            return await userSignIn(args)
-         },
-         async register(_:unknown, args:argsForCreateRegisterUser):Promise<unknown>{
-             const res = await signUp(args.user)
-             return res
-         },
-         async verify(_:unknown, args:argsForToken):Promise<unknown>{
-            const res = await verifyUser(args.user)
-            return res
-        }
-     }
- }
-export default userresolvers
+    user: async (
+      _: unknown,
+      args: { id: string },
+      context: { req: { headers: { authorization: string } } },
+    ): Promise<unknown> => {
+      newContext(context);
+      const id = args.id;
+      return await getUserById(id);
+    },
+  },
+  Mutation: {
+    async login(_: unknown, args: ArgsForLoginUser): Promise<unknown> {
+      const res = await userSignIn(args.user);
+      return res;
+    },
+    async register(_: unknown, args: ArgsForCreateRegisterUser): Promise<unknown> {
+      const res = await signUp(args.user);
+      return res;
+    },
+  },
+};
+export default userresolvers;

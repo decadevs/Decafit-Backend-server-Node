@@ -1,10 +1,7 @@
-import { Router,Request, Response } from 'express';
+import { Router } from 'express';
+import {verifyUser} from '../controller/userController'
 
 const router = Router();
-
-/* GET home page. */
-router.get('/', function (_req:Request , res:Response) {
-  res.json({ title: 'Basic Express App' });
-});
+router.get('/user/verified/:secretToken', verifyUser);
 
 export default router;
