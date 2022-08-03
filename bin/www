@@ -6,6 +6,8 @@ require('dotenv').config();
 
 var app = require('../dist/app').default;
 var debug = require('debug')('decafit:server');
+const { ApolloServerPluginDrainHttpServer } = require('apollo-server-core');
+const { ApolloServer } = require('apollo-server-express');
 var http = require('http');
 const mongoose = require('mongoose');
 
@@ -25,14 +27,6 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
-
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-server.listen(port);
-server.on('error', onError);
-server.on('listening', onListening);
 
 /**
  * Normalize a port into a number, string, or false.
@@ -91,3 +85,30 @@ function onListening() {
   // eslint-disable-next-line no-console
   console.log(`Listening on port, ${port}`);
 }
+
+(async() => {
+  const apolloServer = new ApolloServer({
+    typeDefs: '',
+    resolvers: {},
+    csrfPrevention: true,
+    context: ({req, res}) => ({
+      auth: () => null,
+    }),
+    plugins: [ApolloServerPluginDrainHttpServer(server)]
+  });
+  
+  await apolloServer.start();
+  apolloServer.applyMiddleware({
+    app,
+    cors: true,
+    path: '/v1'
+  });
+  await new Promise((resolve) => {
+    server.listen({ port });
+    server.on('error', onError);
+    server.on('listening', onListening);
+    resolve();
+  });
+  console.log(`🚀 Server ready at http://localhost:${port}${server.graphqlPath}`);
+  
+});

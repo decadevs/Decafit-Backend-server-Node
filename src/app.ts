@@ -55,5 +55,4 @@ app.use(function (err: createError.HttpError, req: express.Request, res: express
 
   res.status(err.status || 500);
 });
-
 export default app;
