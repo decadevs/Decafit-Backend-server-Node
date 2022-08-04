@@ -6,7 +6,7 @@ import { validateRegisterInput, validateLoginInput } from '../utils/validators';
 import mailer from '../middlewares/sendMail';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { generateToken } from '../utils/utils';
-import {template} from '../utils/email-template'
+import {template} from './email-template'
 
 const fromUser = process.env.FROM as string;
 const jwtsecret = process.env.JWT_SECRET as string;
