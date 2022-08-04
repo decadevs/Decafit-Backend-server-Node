@@ -3,13 +3,13 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import {ApolloServer} from 'apollo-server-express'
+import {ApolloServer, ExpressContext} from 'apollo-server-express';
 import {
-  ApolloServerPluginLandingPageLocalDefault,
-  ApolloServerPluginLandingPageProductionDefault
+  ApolloServerPluginLandingPageProductionDefault,
+  ApolloServerPluginLandingPageLocalDefault
 } from 'apollo-server-core';
 import typeDefs from './graphQl/typeDefs'
-import { indexresolver } from './graphQl/resolvers/Index'
+import resolvers from './graphQl/resolvers/Index'
 import indexRouter from './routes/index';
 
 const app = express();
@@ -24,11 +24,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/', indexRouter);
-async function startApolloServer(){
+async function startApolloServer(): Promise<ApolloServer<ExpressContext>> {
   const apolloServer = new ApolloServer({
     cache: 'bounded',
-    typeDefs:typeDefs,
-    resolvers:indexresolver,
+    typeDefs,
+    resolvers,
     csrfPrevention: true,
     plugins: [
       process.env.NODE_ENV === 'production'
@@ -44,7 +44,7 @@ async function startApolloServer(){
   await apolloServer.start()
 
   //attach the appollo server middleware to app
-  apolloServer.applyMiddleware({app:app, path:'/decafit'})
+  apolloServer.applyMiddleware({app, path:'/decafit'})
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -57,9 +57,12 @@ app.use(function (err: createError.HttpError, req: express.Request, res: express
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-
   res.status(err.status || 500);
 });
+return apolloServer;
 }
-startApolloServer()
-export default app;
+
+export default {
+  app, 
+  startApolloServer
+};
