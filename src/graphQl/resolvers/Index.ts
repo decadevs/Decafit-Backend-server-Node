@@ -1,6 +1,6 @@
 import userresolvers from './Users';
 
-export const indexresolver = {
+export default {
     Query: {
       ...userresolvers.Query
     },
