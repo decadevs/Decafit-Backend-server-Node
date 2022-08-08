@@ -8,6 +8,7 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
+    "allowJs": true
   },
-  "include": ["src", "__test__", "views/ts/email-verification.ts"]
+  "include": ["src", "views"]
 }

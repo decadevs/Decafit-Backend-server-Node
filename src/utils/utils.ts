@@ -1,6 +1,5 @@
 import verifyToken from 'jsonwebtoken';
 import Joi from 'joi';
-import { phoneNumberRegex } from './validators';
 // Generate token
 export const generateToken = (user: { [key: string]: string }):unknown => {
   const pass = process.env.JWT_SECRET as string
@@ -14,6 +13,8 @@ const passwordPath = {
   .regex(/^[a-zA-Z0-9]{3,30}$/)
   .required(),
 }
+const phoneNumberRegex = 
+/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/;
   export const registerSchema = Joi.object().keys({
   fullName: Joi.string().required(),
   email: Joi.string().email().trim().lowercase().required(),

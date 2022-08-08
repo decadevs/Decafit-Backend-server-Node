@@ -1,6 +1,4 @@
-import {gql} from 'apollo-server-express'
-
-const typeDefs = gql`
+const typeDefs = `
 
 type UserRegistration {
     id: ID!
@@ -49,6 +47,6 @@ type UserRegistration {
     register(user: RegisterInput): UserRegistration!
     login(user: LoginInput): UserLogin!
   }
-  
 `
+// eslint-disable-next-line no-undef
 export default typeDefs;

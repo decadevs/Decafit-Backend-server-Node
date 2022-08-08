@@ -4,13 +4,8 @@
 
 require('dotenv').config();
 
-var app = require('../dist/app').default;
-const typeDefs = require('../dist/graphQl/typeDefs')
-const resolvers = require('../dist/graphQl/resolvers')
+var {app, startApolloServer} = require('../dist/src/app').default;
 var debug = require('debug')('decafit:server');
-const { ApolloServerPluginLandingPageProductionDefault, ApolloServerPluginLandingPageLocalDefault }
-= require('apollo-server-core');
-const { ApolloServer } = require('apollo-server-express');
 var http = require('http');
 const mongoose = require('mongoose');
 
@@ -30,28 +25,7 @@ app.set('port', port);
 var server = http.createServer(app);
 
 (async() => {
-
-    const apolloServer = new ApolloServer({
-      cache: 'bounded',
-      typeDefs,
-      resolvers,
-      csrfPrevention: true,
-      plugins: [
-        process.env.NODE_ENV === 'production'
-          ? ApolloServerPluginLandingPageProductionDefault({
-              graphRef: process.env.APOLLO_GRAPH_REF,
-              footer: false,
-            })
-          : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
-      ],
-      context:({req})=>({req})
-    })
-  
-    await apolloServer.start()
-  
-    //attach the appollo server middleware to app
-    apolloServer.applyMiddleware({app, path:'/decafit'})
-
+  const apolloServer = await startApolloServer();
   await new Promise((resolve) => {
    try {
       mongoose.connect(url).then(() => {

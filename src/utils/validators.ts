@@ -11,8 +11,8 @@ export const validateEmail = (email:string): ValidationResult => {
   return {valid: true};
 };
 
-export const phoneNumberRegex = 
-/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/gm;
+const phoneNumberRegex = 
+/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/;
 
 export const validatePhone = (phoneNumber:string): ValidationResult => {
   if (!phoneNumber.match(phoneNumberRegex)) {
