@@ -9,13 +9,14 @@ import {
   ApolloServerPluginLandingPageLocalDefault
 } from 'apollo-server-core';
 import typeDefs from './graphQl/typeDefs'
-import resolvers from './graphQl/resolvers/Index'
+import resolvers from './graphQl/resolvers'
 import indexRouter from './routes/index';
+import './events';
 
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, '..', 'views'));
+app.set('views', path.join(__dirname, '..', 'views/ejs'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));

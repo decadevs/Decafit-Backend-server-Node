@@ -1,23 +1,8 @@
-import { signUp, userSignIn, getAllUsers, getUserById } from '../../controller/userController';
-import { newContext } from '../../middlewares/check-auth';
-interface CreateUserRegisterInput {
-  fullName: string;
-  email: string;
-  phoneNumber: string;
-  password: string;
-}
-interface ArgsForCreateRegisterUser {
-  user: CreateUserRegisterInput;
-}
+import { signUp, userSignIn, getAllUsers, getUserById } from '../../../controller/user/userController';
+import { newContext } from '../../../middlewares/check-auth';
+import { ArgsForCreateRegisterUser, ArgsForLoginUser } from './user.types';
 
-interface CreateUserLoginInput {
-  email: string;
-  password: string;
-}
-interface ArgsForLoginUser {
-  user: CreateUserLoginInput;
-}
-const userresolvers = {
+const userResolvers = {
   Query: {
     users: async (
       _: unknown,
@@ -49,4 +34,4 @@ const userresolvers = {
     },
   },
 };
-export default userresolvers;
+export default userResolvers;

@@ -1,4 +1,4 @@
-export function template(token: string): string {
+export function emailVerificationView(token: string): string {
   const link = `${process.env.backendUrl}/user/verified/${token}`;
   let temp = `
      <div style="max-width: 700px; 

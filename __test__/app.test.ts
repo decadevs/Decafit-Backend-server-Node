@@ -1,5 +1,5 @@
 import typeDefs from '../src/graphQl/typeDefs'
-import resolvers from '../src/graphQl/resolvers/Index'
+import resolvers from '../src/graphQl/resolvers'
 import {ApolloServer, gql} from 'apollo-server-express';
 
 const apolloServer = new ApolloServer({

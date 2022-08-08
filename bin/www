@@ -28,17 +28,16 @@ var server = http.createServer(app);
   const apolloServer = await startApolloServer();
   await new Promise((resolve) => {
    try {
-    
-    // eslint-disable-next-line no-console
-    console.log('Database Connected')
-    // eslint-disable-next-line no-console
-    
-      server.listen(port);
-      server.on('error', onError);
-      server.on('listening', onListening);
-      // eslint-disable-next-line no-console
-      console.log(`🚀 Server ready at ::${process.env.PORT || port}${apolloServer.graphqlPath}`);
-      mongoose.connect(url).then(resolve);
+      mongoose.connect(url).then(() => {
+        // eslint-disable-next-line no-console
+        console.log('Database Connected')
+        server.listen(port);
+        server.on('error', onError);
+        server.on('listening', onListening);
+        // eslint-disable-next-line no-console
+        console.log(`🚀 Server ready at ::${process.env.PORT || port}${apolloServer.graphqlPath}`);
+        resolve();
+      });
    } catch (error) {
     console.error(error);
    }
@@ -102,6 +101,4 @@ function onListening() {
   var addr = server.address();
   var bind = typeof addr === 'string' ? 'pipe ' + addr : 'port ' + addr.port;
   debug('Listening on ' + bind);
-  // eslint-disable-next-line no-console
-  console.log(`Listening on port, ${port}`);
 }
