@@ -85,7 +85,6 @@ export async function signUp(user: createUserInput): Promise<unknown> {
       subject: 'Please verify your email!',
       message: html,
     } 
-    console.log(getEmitter().eventNames());
     getEmitter().emit(AppEvents.EMAIL_START, emailRequest);
 
     return {
