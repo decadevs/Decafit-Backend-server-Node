@@ -43,13 +43,6 @@ var server = http.createServer(app);
    }
   })
 })()
-/**
- * Listen on provided port, on all network interfaces.
- */
-
-/**
- * Normalize a port into a number, string, or false.
- */
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
