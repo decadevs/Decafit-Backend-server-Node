@@ -3,7 +3,7 @@ import {verifyUser} from '../controller/user/userController'
 import {
   loginSuccess,
   loginFail
-} from '../controller/userController';
+} from '../controller/user/userController';
 
 const router = Router();
 router.get('/user/verified/:secretToken', verifyUser);

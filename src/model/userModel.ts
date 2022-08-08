@@ -10,6 +10,7 @@ export interface UserType extends mongoose.Document {
   appleId: string;
   role: string;
   verified: boolean;
+  active: boolean;
 }
 
 const userSchema = new mongoose.Schema(

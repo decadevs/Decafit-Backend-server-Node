@@ -8,7 +8,7 @@ import {
   postForgotPassword,
   postResetPassword,
   changePassword,
-} from '../controller/userController';
+} from '../controller/user/userController';
 import { auth } from '../middlewares/authorization-middleware';
 
 const router = Router();

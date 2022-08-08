@@ -8,13 +8,6 @@ import passport from 'passport';
 const MemoryStore = require('memorystore')(session)
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import {ApolloServer, ExpressContext} from 'apollo-server-express';
-import {
-  ApolloServerPluginLandingPageProductionDefault,
-  ApolloServerPluginLandingPageLocalDefault
-} from 'apollo-server-core';
-import typeDefs from './graphQl/typeDefs'
-import resolvers from './graphQl/resolvers'
 import indexRouter from './routes/index';
 import usersRouter from './routes/userRoute';
 import ssoRouter from './routes/sso-auth';
@@ -50,27 +43,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use('/', indexRouter);
-async function startApolloServer(): Promise<ApolloServer<ExpressContext>> {
-  const apolloServer = new ApolloServer({
-    cache: 'bounded',
-    typeDefs,
-    resolvers,
-    csrfPrevention: true,
-    plugins: [
-      process.env.NODE_ENV === 'production'
-        ? ApolloServerPluginLandingPageProductionDefault({
-            graphRef: process.env.APOLLO_GRAPH_REF,
-            footer: false,
-          })
-        : ApolloServerPluginLandingPageLocalDefault({ footer: false }),
-    ],
-    context:({req})=>({req})
-  })
-
-  await apolloServer.start()
-
-  //attach the appollo server middleware to app
-  apolloServer.applyMiddleware({app, path:'/decafit'})
+  // catch 404 and forward to error handler
   app.use('/auth', ssoRouter);
   app.use('/users', usersRouter);
 
@@ -87,10 +60,5 @@ app.use(function (err: createError.HttpError, req: express.Request, res: express
   res.locals.error = req.app.get('env') === 'development' ? err : {};
   res.status(err.status || 500);
 });
-return apolloServer;
-}
 
-export default {
-  app, 
-  startApolloServer
-};
+export default app;
