@@ -4,7 +4,7 @@
 
 require('dotenv').config();
 
-var {app, startApolloServer} = require('../dist/src/app').default;
+var {app, startApolloServer} = require('../dist/app').default;
 var debug = require('debug')('decafit:server');
 var http = require('http');
 const mongoose = require('mongoose');

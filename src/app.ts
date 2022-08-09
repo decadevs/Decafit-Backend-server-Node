@@ -13,8 +13,8 @@ import {
   ApolloServerPluginLandingPageProductionDefault,
   ApolloServerPluginLandingPageLocalDefault
 } from 'apollo-server-core';
-import typeDefs from './graphQl/typeDefs'
-import resolvers from './graphQl/resolvers'
+import typeDefs from './graphQl/typeDefs';
+import resolvers from './graphQl/resolvers/index';
 import indexRouter from './routes/index';
 import usersRouter from './routes/userRoute';
 import ssoRouter from './routes/sso-auth';
@@ -23,7 +23,7 @@ import './events';
 const app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, '..', 'views/ejs'));
+app.set('views', path.join(__dirname, '..', 'views'));
 app.set('view engine', 'ejs');
 
 // Passport config
