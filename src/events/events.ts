@@ -1,0 +1,5 @@
+export const AppEvents = {
+    EMAIL_START: 'EMAIL_START',
+    EMAIL_FAILED: 'EMAIL_FAILED',
+    EMAIL_DELIVERED: 'EMAIL_DELIVERED',
+}

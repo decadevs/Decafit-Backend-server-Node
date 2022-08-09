@@ -8,20 +8,23 @@ export const generateToken = (user: { [key: string]: string }):unknown => {
 
 // Validation Schema
 
+const passwordPath = {
+  password: Joi.string()
+  .regex(/^[a-zA-Z0-9]{3,30}$/)
+  .required(),
+}
+const phoneNumberRegex = 
+/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/;
   export const registerSchema = Joi.object().keys({
   fullName: Joi.string().required(),
-  email: Joi.string().trim().lowercase().required(),
-  phoneNumber: Joi.string(),
-  password: Joi.string()
-    .regex(/^[a-zA-Z0-9]{3,30}$/)
-    .required(),
+  email: Joi.string().email().trim().lowercase().required(),
+  phoneNumber: Joi.string().regex(phoneNumberRegex),
+  ...passwordPath,
 });
 
 export const loginSchema = Joi.object().keys({
-  email: Joi.string().trim().lowercase().required(),
-  password: Joi.string()
-    .regex(/^[a-zA-Z0-9]{3,30}$/)
-    .required(),
+  email: Joi.string().email().trim().lowercase().required(),
+  ...passwordPath,
 });
 
 export const options ={

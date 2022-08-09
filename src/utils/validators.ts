@@ -1,57 +1,26 @@
-interface createUserRegisterInput {
-  fullName: string;
-  phoneNumber:string
-  email: string;
-  password: string;
-}
+import { ValidationResult } from '../interfaces/validation.types';
 
-interface createUserLoginInput {
-  email: string;
-  password: string;
-}
-interface InputObj {
-    errors:{ [key: string]: string }
-    valid:boolean
-}
-
-export const validateRegisterInput = (userObj: createUserRegisterInput):InputObj => {
-  const errors: { [key: string]: string } = {};
-  if (userObj.fullName.trim() === '') {
-    errors.fullName = 'fullname must not be empty';
-  }
-  if (userObj.email.trim().toLowerCase() === '') {
-    errors.email = 'Emails must not be empty';
-  } else {
-    const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
-    if (!userObj.email.match(regEx)) {
-      errors.email = 'Email must be a valid email address';
+export const validateEmail = (email:string): ValidationResult => {
+  const regEx = /^([0-9a-zA-Z]([-.\w]*[0-9a-zA-Z])*@([0-9a-zA-Z][-\w]*[0-9a-zA-Z]\.)+[a-zA-Z]{2,9})$/;
+  if (!email.match(regEx)) {
+    return {
+      error: {email: 'Email must be a valid email address'},
+      valid: false,
     }
   }
-  if (userObj.password.toLowerCase() === '') {
-    errors.password = 'Password must not be empty';
-  }
-  const regExr = /^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/gm;
-  if (!userObj.phoneNumber.match(regExr)){
-    errors.phoneNumber = 'Phone number must be a valid phone number';
-  }
-
-  return {
-    errors,
-    valid: Object.keys(errors).length < 1,
-  };
+  return {valid: true};
 };
 
-export const validateLoginInput = (userObj: createUserLoginInput): InputObj => {
-  const errors: { [key: string]: string } = {};
-  if (userObj.email.trim() === '') {
-     errors.email = 'Email must not be empty';
-  }
-  if (userObj.password.trim() === '') {
-    errors.password = 'Password must not be empty';
-  }
+const phoneNumberRegex = 
+/^\s*(?:\+?(\d{1,3}))?([-. (]*(\d{3})[-. )]*)?((\d{3})[-. ]*(\d{2,4})(?:[-.x ]*(\d+))?)\s*$/;
 
-  return {
-    errors,
-    valid: Object.keys(errors).length < 1,
-  };
+export const validatePhone = (phoneNumber:string): ValidationResult => {
+  if (!phoneNumber.match(phoneNumberRegex)) {
+    return {
+      error: {phone: 'Phone number must be a valid phone number'},
+      valid: false,
+    }
+  }
+  return {valid: true};
 };
+
