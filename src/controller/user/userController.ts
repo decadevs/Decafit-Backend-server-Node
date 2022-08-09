@@ -266,12 +266,14 @@ export const changePassword = async (req: Request, res: Response):Promise<unknow
 // SSO PASSPORT ROUTE CONTROLLER
 export async function loginSuccess(req: Request, res: Response): Promise<void> {
   try {
-    const { _id, email } = req.user as { [key: string]: string };
+    if (req && req.user) {
+      const { _id, email } = req.user as { [key: string]: string };
     const token = generateToken({ _id, email });
     res.status(200).json({
       message: 'Login sucessful',
       token: token,
     });
+    }
   } catch (err) {
     throw new Error(`${err}`);
   }
