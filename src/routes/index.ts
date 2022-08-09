@@ -7,7 +7,7 @@ import {
 
 const router = Router();
 router.get('/user/verified/:secretToken', verifyUser);
-router.get('/', loginSuccess);
-router.get('/fail-login', loginFail);
+router.get('/ext/auth/login', loginSuccess);
+router.get('/ext/auth/fail-login', loginFail);
 
 export default router
