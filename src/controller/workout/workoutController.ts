@@ -1,16 +1,15 @@
 import { Workout, WorkoutType } from '../../model/workoutModel';
 import cloudinary from 'cloudinary';
 import { ObjectId } from 'mongoose';
-// interface Exercises {
-//     [key:string]: string | number;
-//   }
+interface Exercises {
+    [key:string]: string | number;
+  }
 interface createWorkoutInput {
   sets: string;
   title: string;
-  totalCalories: string;
   reps: string;
   backgroundImage: string;
-//   exercises:Exercises[]
+  exercises:Exercises[]
 }
 
 export async function getAllWorkouts(): Promise<Array<WorkoutType>> {
@@ -49,10 +48,9 @@ export async function createWorkouts(input: createWorkoutInput, user:newUser): P
     const newWorkout = {
         sets:input.sets,
         title: input.title,
-        totalCalories: input.totalCalories,
         reps: input.reps,
         backgroundImage:result.url,
-        // exercises:input.exercises,
+        exercises:input.exercises,
         user: user._id,
     };
     const savedWorkout = await Workout.create(newWorkout);

@@ -6,7 +6,6 @@ export interface WorkoutType extends mongoose.Document {
   _id:string
   sets: number,
   title: string,
-  totalCalories: number,
   reps:number,
   backgroundImage: string,
   exercises: Exercises[]
@@ -15,7 +14,6 @@ export interface WorkoutType extends mongoose.Document {
 const workoutSchema = new mongoose.Schema({
   sets: { type: Number, },
   title: { type: String, unique: true },
-  totalCalories: { type: Number },
   reps: { type: Number },
   backgroundImage: { type: String },
   exercises:{ type : Array , 'default' : [] },

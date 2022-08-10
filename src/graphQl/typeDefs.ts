@@ -41,7 +41,6 @@ type UserRegistration {
   input WorkoutInput{
   sets: Int!
   title: String!
-  totalCalories: Int!
   reps: Int!
   backgroundImage:String!
   }
@@ -50,14 +49,13 @@ type WorkOut {
   id:ID!
   sets: Int!
   title: String!
-  totalCalories: Int!
   reps: Int!
   backgroundImage:String!
   createdAt:String!
 }
 
 type deletedResponse{
-     msg:String!
+     message:String!
  }
   
   type Query {
