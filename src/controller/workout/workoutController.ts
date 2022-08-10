@@ -1,4 +1,4 @@
-import { Workout, WorkoutType } from '../model/workoutModel';
+import { Workout, WorkoutType } from '../../model/workoutModel';
 import cloudinary from 'cloudinary';
 import { ObjectId } from 'mongoose';
 // interface Exercises {
