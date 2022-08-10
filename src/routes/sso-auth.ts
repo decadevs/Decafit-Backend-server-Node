@@ -18,13 +18,5 @@ ssoRouter.get('/facebook/callback',
     failureRedirect: '/fail-login',
     successRedirect: '/',
   }));
-
-ssoRouter.get('/apple', passport.authenticate('apple',{ scope: ['profile', 'email'] }));
-
-ssoRouter.get('/apple/callback',
-  passport.authenticate('apple', {
-    failureRedirect: '/fail-login',
-    successRedirect: '/',
-  }));
-
+  
 export = ssoRouter;
