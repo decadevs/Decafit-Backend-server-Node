@@ -37,15 +37,40 @@ type UserRegistration {
     email: String!
     password: String!
   }
+
+  input WorkoutInput{
+  sets: Int!
+  title: String!
+  totalCalories: Int!
+  reps: Int!
+  backgroundImage:String!
+  }
+
+type WorkOut {
+  id:ID!
+  sets: Int!
+  title: String!
+  totalCalories: Int!
+  reps: Int!
+  backgroundImage:String!
+  createdAt:String!
+}
+
+type deletedResponse{
+     msg:String!
+ }
   
   type Query {
     users: [User]!
     user(id: ID!): User!
+    workouts:[WorkOut]!
   }
   
   type Mutation {
     register(user: RegisterInput): UserRegistration!
     login(user: LoginInput): UserLogin!
+    createWorkout(input:WorkoutInput):WorkOut!
+    deleteWorkout(id:ID!):deletedResponse!
   }
 `
 // eslint-disable-next-line no-undef
