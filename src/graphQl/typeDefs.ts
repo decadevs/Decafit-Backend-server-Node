@@ -45,14 +45,41 @@ type UserRegistration {
   backgroundImage:String!
   }
 
+  enum baseType {
+    time
+    reps
+   }
+  
+  type Excercise {
+    id:ID!
+    title: String!,
+    description: String!,
+    type: baseType,
+    paused: Boolean!,
+    pausedTime: String!,
+    completed: Boolean!
+  }
+
+  input ExcerciseInput {
+    title: String!,
+    description: String!,
+    type: baseType,
+    paused: Boolean!,
+    pausedTime: String!,
+    completed: Boolean!
+  }
+
+
 type WorkOut {
   id:ID!
   sets: Int!
   title: String!
   reps: Int!
   backgroundImage:String!
+  exercises:[Excercise]!
   createdAt:String!
 }
+
 
 type deletedResponse{
      message:String!
@@ -62,6 +89,7 @@ type deletedResponse{
     users: [User]!
     user(id: ID!): User!
     workouts:[WorkOut]!
+    excercises:[Excercise]!
   }
   
   type Mutation {
@@ -69,6 +97,7 @@ type deletedResponse{
     login(user: LoginInput): UserLogin!
     createWorkout(input:WorkoutInput):WorkOut!
     deleteWorkout(id:ID!):deletedResponse!
+    createExcercise(input:ExcerciseInput):Excercise!
   }
 `
 // eslint-disable-next-line no-undef

@@ -1,23 +1,20 @@
 import mongoose from 'mongoose';
-interface Exercises {
-    [key:string]: string | number;
-  }
+
 export interface WorkoutType extends mongoose.Document {
-  _id:string
-  sets: number,
-  title: string,
-  reps:number,
-  backgroundImage: string,
-  exercises: Exercises[]
+  _id:string;
+  sets: number;
+  title: string;
+  reps:number;
+  backgroundImage: string;
+  exercises: []
 }
 
 const workoutSchema = new mongoose.Schema({
-  sets: { type: Number, },
+  sets: { type: Number },
   title: { type: String, unique: true },
   reps: { type: Number },
   backgroundImage: { type: String },
-  exercises:{ type : Array , 'default' : [] },
-  user:{type: mongoose.Schema.Types.ObjectId,ref:'User'}
+  exercises:[{type: mongoose.Schema.Types.ObjectId, ref:'Excercise'}],
 }, {
   timestamps: true,
 });
