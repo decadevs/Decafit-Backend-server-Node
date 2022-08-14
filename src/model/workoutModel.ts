@@ -1,4 +1,7 @@
 import mongoose from 'mongoose';
+interface ObjExcercise{
+  [key:string]:  string | number | boolean
+}
 
 export interface WorkoutType extends mongoose.Document {
   _id:string;
@@ -6,7 +9,7 @@ export interface WorkoutType extends mongoose.Document {
   title: string;
   reps:number;
   backgroundImage: string;
-  exercises: []
+  exercises: ObjExcercise[]
 }
 
 const workoutSchema = new mongoose.Schema({

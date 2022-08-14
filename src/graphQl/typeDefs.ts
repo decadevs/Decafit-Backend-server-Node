@@ -45,6 +45,15 @@ type UserRegistration {
   backgroundImage:String!
   }
 
+
+  input UpdateWorkoutInput{
+    id:ID!
+    sets: Int!
+    title: String!
+    reps: Int!
+    backgroundImage:String!
+    }
+
   enum baseType {
     time
     reps
@@ -61,6 +70,16 @@ type UserRegistration {
   }
 
   input ExcerciseInput {
+    title: String!,
+    description: String!,
+    type: baseType,
+    paused: Boolean!,
+    pausedTime: String!,
+    completed: Boolean!
+  }
+
+  input UpdateExcerciseInput {
+    id:ID!
     title: String!,
     description: String!,
     type: baseType,
@@ -89,15 +108,20 @@ type deletedResponse{
     users: [User]!
     user(id: ID!): User!
     workouts:[WorkOut]!
+    workout(id: ID!): WorkOut!
     excercises:[Excercise]!
+    excercise(id: ID!):Excercise!
   }
   
   type Mutation {
     register(user: RegisterInput): UserRegistration!
     login(user: LoginInput): UserLogin!
     createWorkout(input:WorkoutInput):WorkOut!
+    updateWorkout(input:UpdateWorkoutInput):WorkOut!
     deleteWorkout(id:ID!):deletedResponse!
     createExcercise(input:ExcerciseInput):Excercise!
+    updateExcercise(input:UpdateExcerciseInput):Excercise!
+    deleteExcercise(id:ID!):deletedResponse!
   }
 `
 // eslint-disable-next-line no-undef

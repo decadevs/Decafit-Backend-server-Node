@@ -1,17 +1,5 @@
 import {  Excercise, ExerciseType} from '../../model/excerciseModel';
-enum baseType {
-    time,
-    reps
-}
-
-interface createExcerciseInput {
-    title: string,
-    description: string,
-    type: baseType,
-    paused: boolean,
-    pausedTime: string,
-    completed: boolean
-}
+import {createExcerciseInput, updateExcerciseInput} from './excercise.interface'
 
 export async function getAllExercises(): Promise<Array<ExerciseType>> {
   let data: Array<ExerciseType> = [];
@@ -45,4 +33,35 @@ export async function createExcercise(input: createExcerciseInput): Promise<unkn
   } catch (err) {
     throw new Error(`${err}`);
   }
+}
+
+export async function deleteExcercise(id:string):Promise<unknown> {
+  await  Excercise.findByIdAndDelete(id).exec();
+ const response = {
+  message:'Deleted sucessfully',
+ }
+return response;
+}
+
+export async function  updateExcercise(id:string,excercise:updateExcerciseInput):Promise<unknown> {
+  try {
+      const updatedNew = await Excercise.findByIdAndUpdate(id,excercise,{new:true})
+      if (updatedNew){
+          return updatedNew
+      } else {
+          throw new Error('Cannot update excercise')
+      }
+  } catch (err){
+    throw new Error(`${err}`);
+   }
+}
+
+export async function getExcerciseById(id: string): Promise<ExerciseType> {
+  let excercise: ExerciseType;
+  try {
+    excercise = (await Excercise.findById(id)) || ({} as ExerciseType);
+  } catch (error) {
+    throw new Error('Internal server Error');
+  }
+  return excercise;
 }
