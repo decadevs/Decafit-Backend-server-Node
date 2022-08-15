@@ -30,8 +30,8 @@ const workoutresolvers = {
       args: argsForCreateWorkout,
       context: { req: { headers: { authorization: string } } },
     ): Promise<unknown> {
-      const user = newContext(context);
-      return await createWorkouts(args.input, user);
+      newContext(context);
+      return await createWorkouts(args.input);
     },
     deleteWorkout: async (
       _: unknown,

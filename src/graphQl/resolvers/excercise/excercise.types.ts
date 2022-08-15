@@ -6,7 +6,7 @@ enum baseType {
   export interface createExcerciseInput {
     title: string;
     description: string;
-    type: baseType;
+    // type: baseType;
     paused: boolean;
     pausedTime: string;
     completed: boolean;
@@ -14,6 +14,7 @@ enum baseType {
   
   export interface argsForCreateExcercise {
     input: createExcerciseInput;
+    workoutId:string
   }
   
   export interface argsForExcercise {
@@ -24,7 +25,7 @@ enum baseType {
       id:string,
       title: string;
       description: string;
-      type: baseType;
+    //   type: baseType;
       paused: boolean;
       pausedTime: string;
       completed: boolean;

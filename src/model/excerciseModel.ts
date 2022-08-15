@@ -1,9 +1,8 @@
 import mongoose from 'mongoose';
-import {typesEnum} from './typesEnum'
-import _ from 'lodash';
+// import {typesEnum} from './typesEnum'
+//import _ from 'lodash';
 
 export interface ExerciseType extends mongoose.Document {
-    _id:string;
     title: string;
     image: string;
     description: string;
@@ -13,15 +12,14 @@ export interface ExerciseType extends mongoose.Document {
     completed: boolean
 }
 
-const excerciseSchema = new mongoose.Schema({
+export const excerciseSchema = new mongoose.Schema({
     title: { type: String },
     image: { type: String },
     description: { type: String },
-    type: { type: String,  enum: _.values(typesEnum)},
-    paused: { type: Boolean },
-    pausedTime: { type: String },
-    completed: { type: Boolean },
-    // workout:{type: mongoose.Schema.Types.ObjectId,ref:'Workout'}
+    // type: { type: String,  enum: _.values(typesEnum)},
+    paused: { type: Boolean ,default: false},
+    pausedTime: { type: String, default:''},
+    completed: { type: Boolean ,default: false},
 }, {
   timestamps: true,
 });

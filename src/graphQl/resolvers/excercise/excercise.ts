@@ -31,7 +31,7 @@ const excerciseresolvers = {
       context: { req: { headers: { authorization: string } } },
     ): Promise<unknown> {
       newContext(context);
-      return await createExcercise(args.input);
+      return await createExcercise(args.input, args.workoutId);
     },
     deleteExcercise: async (
       _: unknown,

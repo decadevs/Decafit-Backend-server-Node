@@ -1,5 +1,6 @@
 import {  Excercise, ExerciseType} from '../../model/excerciseModel';
 import {createExcerciseInput, updateExcerciseInput} from './excercise.interface'
+import {getWorkoutById} from '../workout/workoutController'
 
 export async function getAllExercises(): Promise<Array<ExerciseType>> {
   let data: Array<ExerciseType> = [];
@@ -11,21 +12,24 @@ export async function getAllExercises(): Promise<Array<ExerciseType>> {
   return data;
 }
 
-export async function createExcercise(input: createExcerciseInput): Promise<unknown> {
+export async function createExcercise(input: createExcerciseInput, workoutId:string): Promise<unknown> {
   try {
-   
         const newExcercise = new Excercise({
         title: input.title,
         description: input.description,
-        type: input.type,
+        // type: input.type,
         paused: input.paused,
         pausedTime: input.pausedTime,
         completed:input.completed,
         createdAt: new Date().toISOString(),
       });
      
-    const savedExcercise = await Excercise.create(newExcercise);
+    const savedExcercise = await Excercise.create(newExcercise)
     if (savedExcercise) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const workout:any = await getWorkoutById(workoutId)
+      workout.exercises.push(savedExcercise)
+      workout.save();
       return  savedExcercise;
     } else {
       throw new Error('Cannot create new exercise');
