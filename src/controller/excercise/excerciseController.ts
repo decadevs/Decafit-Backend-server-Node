@@ -17,7 +17,6 @@ export async function createExcercise(input: createExcerciseInput, workoutId:str
         const newExcercise = new Excercise({
         title: input.title,
         description: input.description,
-        // type: input.type,
         paused: input.paused,
         pausedTime: input.pausedTime,
         completed:input.completed,
@@ -28,6 +27,7 @@ export async function createExcercise(input: createExcerciseInput, workoutId:str
     if (savedExcercise) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const workout:any = await getWorkoutById(workoutId)
+      console.log(workout)
       workout.exercises.push(savedExcercise)
       workout.save();
       return  savedExcercise;

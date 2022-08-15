@@ -31,6 +31,10 @@ export async function createWorkouts(input: createWorkoutInput): Promise<unknown
       folder: 'decafit_folder',
     });
 
+    if (!result){
+     throw new Error('Image is not a valid format only jpg and png is allowed')
+    }
+
     const newWorkout = {
         sets:input.sets,
         title: input.title,
@@ -76,6 +80,10 @@ export async function  updateWorkout(id:string,workout:updateWorkoutInput):Promi
       folder: 'decafit_folder',
     });
 
+    if (!result){
+      throw new Error('Image is not a valid format only jpg and png is allowed')
+     } 
+     
     const newWorkout = {
         sets:workout.sets,
         title: workout.title,

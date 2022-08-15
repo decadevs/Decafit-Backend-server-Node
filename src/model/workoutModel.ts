@@ -14,9 +14,9 @@ export interface WorkoutType extends mongoose.Document {
 }
 
 const workoutSchema = new mongoose.Schema({
-  sets: { type: Number },
+  sets: { type: Number, default:0 },
   title: { type: String, unique: true },
-  reps: { type: Number },
+  reps: { type: Number, default:0 },
   backgroundImage: { type: String },
   exercises:[{type: excerciseSchema}],
 }, {

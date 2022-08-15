@@ -48,22 +48,16 @@ type UserRegistration {
 
   input UpdateWorkoutInput{
     id:ID!
-    sets: Int!
-    title: String!
-    reps: Int!
-    backgroundImage:String!
+    sets: Int
+    title: String
+    reps: Int
+    backgroundImage:String
     }
-
-  // enum baseType {
-  //   time
-  //   reps
-  //  }
   
   type Excercise {
     id:ID!
     title: String!,
     description: String!,
-    // type: baseType!,
     paused: Boolean,
     pausedTime: String,
     completed: Boolean
@@ -72,7 +66,6 @@ type UserRegistration {
   input ExcerciseInput {
     title: String!,
     description: String!,
-    // type: baseType,
     paused: Boolean,
     pausedTime: String,
     completed: Boolean
@@ -82,7 +75,6 @@ type UserRegistration {
     id:ID!
     title: String!,
     description: String!,
-    // type: baseType,
     paused: Boolean!,
     pausedTime: String!,
     completed: Boolean!
@@ -91,10 +83,10 @@ type UserRegistration {
 
 type WorkOut {
   id:ID!
-  sets: Int!
   title: String!
-  reps: Int!
   backgroundImage:String!
+  sets: Int
+  reps: Int
   exercises:[Excercise]
   createdAt:String!
 }
