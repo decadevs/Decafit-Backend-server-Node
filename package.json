@@ -13,7 +13,7 @@
     "lint": "yarn eslint && yarn dev:build",
     "test": "jest --config jest.config.ts __test__/app.test.ts",
     "coverage": "yarn test -- --coverage --watchAll=false ",
-    "deploy": "NODE_ENV=development ./cli/deploy.sh"
+    "deploy": "NODE_ENV=development rimraf ./dist && yarn dev:build && node ./bin/www"
   },
   "dependencies": {
     "@types/lodash": "~4.14.182",
