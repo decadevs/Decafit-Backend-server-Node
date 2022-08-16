@@ -1,1 +1,1 @@
-web: ./cli/deploy.sh
+web: yarn run deploy
