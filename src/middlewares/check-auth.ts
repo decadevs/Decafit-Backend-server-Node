@@ -1,8 +1,9 @@
 import { AuthenticationError } from 'apollo-server-errors';
 import jwt from 'jsonwebtoken';
+import { ObjectId } from 'mongoose';
 const secret = process.env.JWT_SECRET as string;
 interface newUser{
-    _id:string
+    _id:ObjectId
 }
 export const newContext = (context: { req: { headers: { authorization: string } } }):newUser=>{
  const authHeader = context.req.headers.authorization;

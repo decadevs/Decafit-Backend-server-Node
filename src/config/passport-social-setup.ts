@@ -25,7 +25,7 @@ export = (passport: passport.Authenticator) => {
           googleId: profile.id,
           fullName: profile.displayName,
           email: profile.emails?.[0].value,
-          active: true,
+          verified: true,
         };
 
         try {
@@ -73,11 +73,10 @@ export = (passport: passport.Authenticator) => {
             return done(null, user);
           } else {
             user = await User.create({
-              //fullName: first_name,
               fullName: first_name,
               email,
               facebookId: id,
-              active: true,
+              verified: true,
             });
 
             return done(null, user);

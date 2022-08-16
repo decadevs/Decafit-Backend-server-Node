@@ -8,7 +8,7 @@ ssoRouter.get('/google', passport.authenticate('google', { scope: ['profile', 'e
 ssoRouter.get('/google/redirect',
   passport.authenticate('google', {
     failureRedirect: '/fail-login',
-    successRedirect: '/',
+    successRedirect: '/success',
   }));
 
  ssoRouter.get('/facebook', passport.authenticate('facebook', { scope: ['email', 'user_gender', 'user_location'] }));
@@ -16,15 +16,7 @@ ssoRouter.get('/google/redirect',
 ssoRouter.get('/facebook/callback',
   passport.authenticate('facebook', {
     failureRedirect: '/fail-login',
-    successRedirect: '/',
+    successRedirect: '/success',
   }));
-
-ssoRouter.get('/apple', passport.authenticate('apple',{ scope: ['profile', 'email'] }));
-
-ssoRouter.get('/apple/callback',
-  passport.authenticate('apple', {
-    failureRedirect: '/fail-login',
-    successRedirect: '/',
-  }));
-
+  
 export = ssoRouter;

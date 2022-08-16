@@ -14,5 +14,5 @@ elif [[ $env == "development" ]]; then
     echo "building app"
     tsc
     echo "starting server.."
-    node ./bin/www
+    node ./../bin/www
 fi
