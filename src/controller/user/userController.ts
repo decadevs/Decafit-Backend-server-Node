@@ -4,8 +4,8 @@ import { User, UserType } from '../../model/userModel';
 import { UserInputError } from 'apollo-server-express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import { generateToken, registerSchema, options, loginSchema } from '../../utils/utils';
-import { emailVerificationView } from '../../../views/ts/email-verification';
-import { passwordResetView } from '../../../views/ts/password-reset';
+import { emailVerificationView } from '../../ts/email-verification';
+import { passwordResetView } from '../../ts/password-reset';
 import { createdLoginUserInput, createUserInput } from './user.interface';
 import { IEmailRequest } from '../../interfaces/email.type';
 import { getEmitter } from '../../events/emitter';
@@ -266,12 +266,14 @@ export const changePassword = async (req: Request, res: Response):Promise<unknow
 // SSO PASSPORT ROUTE CONTROLLER
 export async function loginSuccess(req: Request, res: Response): Promise<void> {
   try {
-    const { _id, email } = req.user as { [key: string]: string };
+    if (req && req.user) {
+      const { _id, email } = req.user as { [key: string]: string };
     const token = generateToken({ _id, email });
     res.status(200).json({
       message: 'Login sucessful',
       token: token,
     });
+    }
   } catch (err) {
     throw new Error(`${err}`);
   }
