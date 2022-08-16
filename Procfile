@@ -1,1 +1,1 @@
-web: yarn run deploy
+web: ./deploy.sh
