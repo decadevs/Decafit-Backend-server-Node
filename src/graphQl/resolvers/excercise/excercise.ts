@@ -31,7 +31,7 @@ const excerciseresolvers = {
       context: { req: { headers: { authorization: string } } },
     ): Promise<unknown> {
       newContext(context);
-      return await createExcercise(args.input);
+      return await createExcercise(args.input, args.workoutId);
     },
     deleteExcercise: async (
       _: unknown,
@@ -49,8 +49,8 @@ const excerciseresolvers = {
     ): Promise<unknown> => {
       newContext(context);
       const id = args.input.id;
-      const { title, description, type, paused, pausedTime, completed } = args.input;
-      const excercise = { title, description, type, paused, pausedTime, completed };
+      const { title, description, paused, pausedTime, completed } = args.input;
+      const excercise = { title, description,  paused, pausedTime, completed };
       return await updateExcercise(id, excercise);
     },
   },

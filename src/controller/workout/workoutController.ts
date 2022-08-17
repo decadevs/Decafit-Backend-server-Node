@@ -1,6 +1,5 @@
 import { Workout, WorkoutType } from '../../model/workoutModel';
 import cloudinary from 'cloudinary';
-import { ObjectId } from 'mongoose';
 import {createWorkoutInput,updateWorkoutInput} from './workout.interface'
 
 export async function getAllWorkouts(): Promise<Array<WorkoutType>> {
@@ -13,11 +12,7 @@ export async function getAllWorkouts(): Promise<Array<WorkoutType>> {
   return data;
 }
 
-interface newUser{
-    _id:ObjectId
-}
-
-export async function createWorkouts(input: createWorkoutInput, user:newUser): Promise<unknown> {
+export async function createWorkouts(input: createWorkoutInput): Promise<unknown> {
   try {
     //initialize cloudinary
     cloudinary.v2.config({
@@ -36,13 +31,16 @@ export async function createWorkouts(input: createWorkoutInput, user:newUser): P
       folder: 'decafit_folder',
     });
 
+    if (!result){
+     throw new Error('Image is not a valid format only jpg and png is allowed')
+    }
+
     const newWorkout = {
         sets:input.sets,
         title: input.title,
         reps: input.reps,
         backgroundImage:result.url,
-        exercises:input.exercises,
-        user: user._id,
+        exercises:input.exercises
     };
     const savedWorkout = await Workout.create(newWorkout);
     if (savedWorkout) {
@@ -82,6 +80,10 @@ export async function  updateWorkout(id:string,workout:updateWorkoutInput):Promi
       folder: 'decafit_folder',
     });
 
+    if (!result){
+      throw new Error('Image is not a valid format only jpg and png is allowed')
+     } 
+     
     const newWorkout = {
         sets:workout.sets,
         title: workout.title,

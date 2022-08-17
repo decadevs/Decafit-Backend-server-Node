@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import {excerciseSchema} from './excerciseModel'
 interface ObjExcercise{
   [key:string]:  string | number | boolean
 }
@@ -9,15 +10,15 @@ export interface WorkoutType extends mongoose.Document {
   title: string;
   reps:number;
   backgroundImage: string;
-  exercises: ObjExcercise[]
+  exercises:  ObjExcercise[]
 }
 
 const workoutSchema = new mongoose.Schema({
-  sets: { type: Number },
+  sets: { type: Number, default:0 },
   title: { type: String, unique: true },
-  reps: { type: Number },
+  reps: { type: Number, default:0 },
   backgroundImage: { type: String },
-  exercises:[{type: mongoose.Schema.Types.ObjectId, ref:'Excercise'}],
+  exercises:[{type: excerciseSchema}],
 }, {
   timestamps: true,
 });

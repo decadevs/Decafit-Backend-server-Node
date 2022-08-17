@@ -14,6 +14,7 @@
     "test": "jest --config jest.config.ts __test__/app.test.ts",
     "coverage": "yarn test -- --coverage --watchAll=false ",
     "deploy": "NODE_ENV=development source deploy.sh"
+
   },
   "dependencies": {
     "@types/lodash": "~4.14.182",

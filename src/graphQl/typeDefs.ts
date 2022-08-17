@@ -39,50 +39,42 @@ type UserRegistration {
   }
 
   input WorkoutInput{
-  sets: Int!
   title: String!
-  reps: Int!
   backgroundImage:String!
+  reps: Int
+  sets: Int
   }
 
 
   input UpdateWorkoutInput{
     id:ID!
-    sets: Int!
-    title: String!
-    reps: Int!
-    backgroundImage:String!
+    sets: Int
+    title: String
+    reps: Int
+    backgroundImage:String
     }
-
-  enum baseType {
-    time
-    reps
-   }
   
   type Excercise {
     id:ID!
     title: String!,
     description: String!,
-    type: baseType,
-    paused: Boolean!,
-    pausedTime: String!,
-    completed: Boolean!
+    paused: Boolean,
+    pausedTime: String,
+    completed: Boolean
   }
 
   input ExcerciseInput {
     title: String!,
     description: String!,
-    type: baseType,
-    paused: Boolean!,
-    pausedTime: String!,
-    completed: Boolean!
+    paused: Boolean,
+    pausedTime: String,
+    completed: Boolean
   }
 
   input UpdateExcerciseInput {
     id:ID!
     title: String!,
     description: String!,
-    type: baseType,
     paused: Boolean!,
     pausedTime: String!,
     completed: Boolean!
@@ -91,14 +83,13 @@ type UserRegistration {
 
 type WorkOut {
   id:ID!
-  sets: Int!
   title: String!
-  reps: Int!
   backgroundImage:String!
-  exercises:[Excercise]!
+  sets: Int
+  reps: Int
+  exercises:[Excercise]
   createdAt:String!
 }
-
 
 type deletedResponse{
      message:String!
@@ -119,7 +110,7 @@ type deletedResponse{
     createWorkout(input:WorkoutInput):WorkOut!
     updateWorkout(input:UpdateWorkoutInput):WorkOut!
     deleteWorkout(id:ID!):deletedResponse!
-    createExcercise(input:ExcerciseInput):Excercise!
+    createExcercise(input:ExcerciseInput, workoutId:String!):Excercise!
     updateExcercise(input:UpdateExcerciseInput):Excercise!
     deleteExcercise(id:ID!):deletedResponse!
   }
