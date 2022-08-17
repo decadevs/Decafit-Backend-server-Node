@@ -10,9 +10,9 @@ if [[ $env == "local" ]]; then
     yarn run dev:start
 elif [[ $env == "development" ]]; then
     echo "cleaning build"
-    rimraf ./../dist
+    npx rimraf ./dist
     echo "building app"
-    tsc
+    npx tsc
     echo "starting server.."
     node ./../bin/www
 fi
