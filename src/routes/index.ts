@@ -1,10 +1,13 @@
-import express, { Router,Request, Response } from 'express';
+import { Router } from 'express';
+import {verifyUser} from '../controller/user/userController'
+import {
+  loginSuccess,
+  loginFail
+} from '../controller/user/userController';
 
 const router = Router();
+router.get('/user/verified/:secretToken', verifyUser);
+router.get('/success', loginSuccess);
+router.get('/fail-login', loginFail);
 
-/* GET home page. */
-router.get('/', function (_req:Request , res:Response) {
-  res.render('index', { title: 'Basic Express App' });
-});
-
-export default router;
+export default router

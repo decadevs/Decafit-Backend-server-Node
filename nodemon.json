@@ -1,0 +1,6 @@
+{
+    "ignore": ["*.test.{js|ts}", "node_modules"],
+    "watch": ["src", "bin"],
+    "ext": ".ts",
+    "exec": "rimraf ./dist && yarn dev:build && ts-node bin/www"
+}
