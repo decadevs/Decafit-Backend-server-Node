@@ -2,9 +2,7 @@
   export interface createExcerciseInput {
     title: string;
     description: string;
-    paused: boolean;
-    pausedTime: string;
-    completed: boolean;
+    image:string
   }
   
   export interface argsForCreateExcercise {
@@ -20,9 +18,7 @@
       id:string,
       title: string;
       description: string;
-      paused: boolean;
-      pausedTime: string;
-      completed: boolean;
+      image:string
     }
   export interface argsToUpdateExcercise {
     input: updateExcerciseInput;

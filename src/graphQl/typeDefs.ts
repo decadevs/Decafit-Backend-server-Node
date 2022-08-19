@@ -57,27 +57,21 @@ type UserRegistration {
   type Excercise {
     id:ID!
     title: String!,
-    description: String!,
-    paused: Boolean,
-    pausedTime: String,
-    completed: Boolean
+    description: String!
+    image:String!
   }
 
   input ExcerciseInput {
     title: String!,
-    description: String!,
-    paused: Boolean,
-    pausedTime: String,
-    completed: Boolean
+    description: String!
+    image:String!
   }
 
   input UpdateExcerciseInput {
-    id:ID!
-    title: String!,
-    description: String!,
-    paused: Boolean!,
-    pausedTime: String!,
-    completed: Boolean!
+    id:ID
+    title: String,
+    description: String,
+    image:String
   }
 
 

@@ -49,8 +49,8 @@ const excerciseresolvers = {
     ): Promise<unknown> => {
       newContext(context);
       const id = args.input.id;
-      const { title, description, paused, pausedTime, completed } = args.input;
-      const excercise = { title, description,  paused, pausedTime, completed };
+      const { title, description,image} = args.input;
+      const excercise = { title, description,image};
       return await updateExcercise(id, excercise);
     },
   },

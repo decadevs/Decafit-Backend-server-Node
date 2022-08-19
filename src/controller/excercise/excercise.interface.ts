@@ -1,15 +1,11 @@
 export interface createExcerciseInput {
     title: string,
     description: string,
-    paused: boolean,
-    pausedTime: string,
-    completed: boolean
+    image:string
 }
 
 export interface updateExcerciseInput {
   title: string,
   description: string,
-  paused: boolean,
-  pausedTime: string,
-  completed: boolean
+  image:string
 }

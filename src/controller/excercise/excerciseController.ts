@@ -1,6 +1,7 @@
 import {  Excercise, ExerciseType} from '../../model/excerciseModel';
 import {createExcerciseInput, updateExcerciseInput} from './excercise.interface'
 import {getWorkoutById} from '../workout/workoutController'
+import cloudinary from 'cloudinary';
 
 export async function getAllExercises(): Promise<Array<ExerciseType>> {
   let data: Array<ExerciseType> = [];
@@ -14,12 +15,30 @@ export async function getAllExercises(): Promise<Array<ExerciseType>> {
 
 export async function createExcercise(input: createExcerciseInput, workoutId:string): Promise<unknown> {
   try {
+      //initialize cloudinary
+      cloudinary.v2.config({
+        cloud_name: process.env.CLOUDINARY_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+      });
+  
+      const result = await cloudinary.v2.uploader.upload(input.image, {
+        // only jpg and png upload
+        allowed_formats: ['jpg', 'png'],
+        //generates a new id for each uploaded image
+        public_id: '',
+        /*folder where the images are stored in the cloud
+         */
+        folder: 'decafit_folder',
+      });
+  
+      if (!result){
+       throw new Error('Image is not a valid format only jpg and png is allowed')
+      }
         const newExcercise = new Excercise({
         title: input.title,
         description: input.description,
-        paused: input.paused,
-        pausedTime: input.pausedTime,
-        completed:input.completed,
+        image:input.image,
         createdAt: new Date().toISOString(),
       });
      
@@ -27,7 +46,6 @@ export async function createExcercise(input: createExcerciseInput, workoutId:str
     if (savedExcercise) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const workout:any = await getWorkoutById(workoutId)
-      console.log(workout)
       workout.exercises.push(savedExcercise)
       workout.save();
       return  savedExcercise;
