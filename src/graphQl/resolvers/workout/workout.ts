@@ -25,7 +25,7 @@ const workoutresolvers = {
       },
   },
   Mutation: {
-    async createWorkout(
+    async  workoutCreate(
       _: unknown,
       args: argsForCreateWorkout,
       context: { req: { headers: { authorization: string } } },
@@ -33,7 +33,7 @@ const workoutresolvers = {
       newContext(context);
       return await createWorkouts(args.input);
     },
-    deleteWorkout: async (
+    workoutDelete: async (
       _: unknown,
       args: { id: string },
       context: { req: { headers: { authorization: string } } },
@@ -42,7 +42,7 @@ const workoutresolvers = {
       const id = args.id;
       return await deleteWorkout(id);
     },
-    updateWorkout: async (
+    workoutUpdate: async (
       _: unknown,
       args: argsToUpdateWorkout,
       context: { req: { headers: { authorization: string } } },
