@@ -44,9 +44,7 @@ export async function createReport(input:IReport):Promise<IReport>{
    } else {
      savedReport = await Report.create(data)
    }
-   console.log('Repsonse', savedReport);
   const response =  ReportDTO.get(savedReport)
-  console.log('DTO', response)
    return response
 }
 
@@ -57,12 +55,12 @@ export async function createReport(input:IReport):Promise<IReport>{
       throw new Error('Internal server Error');
     }
 }
-
 export async function getReport(userID:string):Promise<unknown>{
     try {
         const report = await getReportByUserId(userID)
     if (report){
        return ReportDTO.get(report)
+
     }
     throw new Error('Report not found')
     } catch (err) {

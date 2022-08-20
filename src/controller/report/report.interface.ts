@@ -1,4 +1,3 @@
-
 export interface IExerciseResponse{
     exerciseId: IExerciseProps;
 }

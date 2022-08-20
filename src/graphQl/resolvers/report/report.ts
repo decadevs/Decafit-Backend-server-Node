@@ -27,7 +27,6 @@ const reportResolver = {
         async reportCreate(_:unknown, args:IReportCreateInput,  
             context: { req: { headers: { authorization: string } } }):Promise<unknown>{
                 newContext(context);
-                console.log(args);
                 return createReport(args.input)
         }
     }
