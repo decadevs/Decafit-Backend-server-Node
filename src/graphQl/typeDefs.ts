@@ -117,6 +117,10 @@ input ReportCreateInput{
 
 input ReportWorkoutInput{
   workoutId:String!
+  workoutReps: Int!
+  workoutSet: Int!
+  workoutTime: String!
+  workoutCount: Int!
   exercises:[ReportExcerciseProgressInput!]!
 }
 
@@ -130,6 +134,10 @@ type ReportExcerciseProgress{
 
 type ReportWorkout{
   workoutId:String!
+  workoutReps: Int!
+  workoutSet: Int!
+  workoutTime: String!
+  workoutCount: Int!
   exercises:[ReportExcerciseProgress!]!
 }
 
@@ -168,6 +176,5 @@ type deletedResponse{
     reportResetWorkout(userID: String!,workoutId:String!):WorkOut!
   }
 `
-// eslint-disable-next-line no-undef
 export default typeDefs;
 

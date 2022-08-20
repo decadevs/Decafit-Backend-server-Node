@@ -10,16 +10,26 @@ interface IWorkout {
   };
 }
 
+interface IWorkoutProps {
+  workoutId: {
+    workoutReps: number;
+    workoutSet: number;
+    workoutTime: string;
+    workoutCount: number;
+  }
+}
 export interface ReportType extends mongoose.Document {
   _id: string;
   userID: string;
   workouts: IWorkout;
+  workoutProps: IWorkoutProps;
 }
 
 export const reportSchema = new mongoose.Schema(
   {
     userID:  {type: String, required:true, unique:true},
-    workouts:  {type: mongoose.Schema.Types.Mixed}
+    workouts:  {type: mongoose.Schema.Types.Mixed},
+    workoutProps:  {type: mongoose.Schema.Types.Mixed},
   },
   {
     timestamps: true,

@@ -9,10 +9,22 @@ export interface IReportCreateInput {
   input: IReport;
 }
 
+export interface IReportWorkoutSubProps {
+  workoutId: string;
+  workoutReps: string;
+  workoutSet: number;
+  workoutTime: string;
+  workoutCount: number;
+}
+export interface IReportWorkoutProps extends IReportWorkoutSubProps{
+  exercises: ReportWorkoutExcercise[];
+}
 export interface IReport {
   userID: string;
-  workouts: {
-    workoutId: string;
-    exercises: [ReportWorkoutExcercise];
-  };
+  workouts: IReportWorkoutProps;
+}
+
+export interface IReports {
+  userID: string;
+  workouts: IReportWorkoutProps[];
 }

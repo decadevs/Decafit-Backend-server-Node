@@ -1,7 +1,8 @@
 import { IReport, ReportWorkoutExcercise } from '../../graphQl/resolvers/report/report.types'
 import { Report, ReportType } from '../../model/reportModel'
 import { ReportDTO } from './report.dto'
-const getExcercise = (excercises:ReportWorkoutExcercise[])=>{
+
+const getExcercise = (input: IReport, excercises:ReportWorkoutExcercise[])=>{
     return  excercises.reduce((acc,elem)=>{
        
        return {...acc,[elem.excerciseId]:{
@@ -10,17 +11,31 @@ const getExcercise = (excercises:ReportWorkoutExcercise[])=>{
            paused: elem.paused,
            pausedTime: elem.pausedTime,
           completed: elem.completed
-       }}
+       }
+      }
     },{})
   }
+
+function getWorkout(input: IReport){
+  return {
+    userID:input.userID,
+    workouts:{
+        [input.workouts.workoutId]:getExcercise(input, input.workouts.exercises),
+    },
+    workoutProps: {
+      [input.workouts.workoutId]: {
+        workoutReps: input.workouts.workoutReps,
+        workoutSet: input.workouts.workoutSet,
+        workoutTime: input.workouts.workoutTime,
+        workoutCount: input.workouts.workoutCount
+      }
+    }
+ }
+}
+
 export async function createReport(input:IReport):Promise<IReport>{
    
-  const data = {
-      userID:input.userID,
-      workouts:{
-          [input.workouts.workoutId]:getExcercise(input.workouts.exercises)
-      }
-  }
+   const data = getWorkout(input);
    const report = await getReportByUserId(input.userID)
    let savedReport;
    if (report) {
@@ -29,8 +44,7 @@ export async function createReport(input:IReport):Promise<IReport>{
    } else {
      savedReport = await Report.create(data)
    }
- 
-  const response =  new ReportDTO(savedReport)
+  const response =  ReportDTO.get(savedReport)
    return response
 }
 
@@ -45,7 +59,8 @@ export async function getReport(userID:string):Promise<unknown>{
     try {
         const report = await getReportByUserId(userID)
     if (report){
-       return new ReportDTO(report)
+       return ReportDTO.get(report)
+
     }
     throw new Error('Report not found')
     } catch (err) {
@@ -59,7 +74,7 @@ export async function getReportByUserIDAndWorkoutID(userID:string, workoutID:str
      if (report){
         const result = report
         result.workouts= (report.workouts as any)[workoutID]
-       return new ReportDTO(result)
+       return ReportDTO.getByWorkoutID(result, workoutID);
     }
      throw Error('Report not found')
     
