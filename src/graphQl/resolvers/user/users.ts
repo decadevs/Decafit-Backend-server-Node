@@ -24,11 +24,11 @@ const userResolvers = {
     },
   },
   Mutation: {
-    async login(_: unknown, args: ArgsForLoginUser): Promise<unknown> {
+    async userLogin(_: unknown, args: ArgsForLoginUser): Promise<unknown> {
       const res = await userSignIn(args.user);
       return res;
     },
-    async register(_: unknown, args: ArgsForCreateRegisterUser): Promise<unknown> {
+    async  userRegister(_: unknown, args: ArgsForCreateRegisterUser): Promise<unknown> {
       const res = await signUp(args.user);
       return res;
     },

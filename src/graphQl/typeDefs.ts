@@ -13,9 +13,9 @@ type UserRegistration {
     fullName: String!
     email: String!
     phoneNumber: String!
-    createdAt: String!
+    createdAt: String
     message: String!
-    token: String!
+    token: String
   }
   
   type User {
@@ -23,7 +23,7 @@ type UserRegistration {
     fullName: String!
     phoneNumber: String!
     email: String!
-    createdAt: String!
+    createdAt: String
   }
   
   input RegisterInput {
@@ -53,33 +53,36 @@ type UserRegistration {
     reps: Int
     backgroundImage:String
     }
+
+
+    enum EnumType{
+      time
+      count
+    }
   
   type Excercise {
     id:ID!
-    title: String!,
-    description: String!,
-    paused: Boolean,
-    pausedTime: String,
-    completed: Boolean
+    title: String!
+    description: String!
+    image:String!
+    type:EnumType!
   }
 
   input ExcerciseInput {
-    title: String!,
-    description: String!,
-    paused: Boolean,
-    pausedTime: String,
-    completed: Boolean
+    title: String!
+    description: String!
+    image:String!
+    type:EnumType!
   }
 
   input UpdateExcerciseInput {
-    id:ID!
-    title: String!,
-    description: String!,
-    paused: Boolean!,
-    pausedTime: String!,
-    completed: Boolean!
-  }
+    id:ID
+    title: String
+    description: String
+    image:String
+    type:EnumType
 
+  }
 
 type WorkOut {
   id:ID!
@@ -88,7 +91,51 @@ type WorkOut {
   sets: Int
   reps: Int
   exercises:[Excercise]
-  createdAt:String!
+  createdAt:String
+}
+
+type ProgressExerciseInfo {
+        type:EnumType
+        paused: Boolean
+        pausedTime: String
+        completed: Boolean
+}
+
+
+input ReportExcerciseProgressInput{
+  excerciseId:String
+  type:EnumType
+  paused: Boolean
+  pausedTime: String
+  completed: Boolean
+}
+
+input ReportCreateInput{
+  userID:String!
+  workouts:ReportWorkoutInput!
+}
+
+input ReportWorkoutInput{
+  workoutId:String!
+  exercises:[ReportExcerciseProgressInput!]!
+}
+
+type ReportExcerciseProgress{
+  excerciseId:String
+  type:EnumType
+  paused: Boolean
+  pausedTime: String
+  completed: Boolean
+}
+
+type ReportWorkout{
+  workoutId:String!
+  exercises:[ReportExcerciseProgress!]!
+}
+
+type Report{
+  userID: String!
+  workouts: ReportWorkout
 }
 
 type deletedResponse{
@@ -102,18 +149,25 @@ type deletedResponse{
     workout(id: ID!): WorkOut!
     excercises:[Excercise]!
     excercise(id: ID!):Excercise!
+    reportWorkout(userID:String!, workoutID:String!):Report
+    report(userID:String!):Report
   }
+
   
   type Mutation {
-    register(user: RegisterInput): UserRegistration!
-    login(user: LoginInput): UserLogin!
-    createWorkout(input:WorkoutInput):WorkOut!
-    updateWorkout(input:UpdateWorkoutInput):WorkOut!
-    deleteWorkout(id:ID!):deletedResponse!
-    createExcercise(input:ExcerciseInput, workoutId:String!):Excercise!
-    updateExcercise(input:UpdateExcerciseInput):Excercise!
-    deleteExcercise(id:ID!):deletedResponse!
+    userRegister(user: RegisterInput): UserRegistration!
+    userLogin(user: LoginInput): UserLogin!
+    workoutCreate(input:WorkoutInput):WorkOut!
+    workoutUpdate(input:UpdateWorkoutInput):WorkOut!
+    workoutDelete(id:ID!):deletedResponse!
+    excerciseCreate(input:ExcerciseInput, workoutId:String!):Excercise!
+    excerciseUpdate(input:UpdateExcerciseInput):Excercise!
+    excerciseDelete(id:ID!):deletedResponse!
+    reportCreate(input:ReportCreateInput):Report!
+    reportUpdate(input:ReportCreateInput):Report!
+    reportResetWorkout(userID: String!,workoutId:String!):WorkOut!
   }
 `
 // eslint-disable-next-line no-undef
 export default typeDefs;
+

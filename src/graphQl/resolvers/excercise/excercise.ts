@@ -25,7 +25,7 @@ const excerciseresolvers = {
       },
   },
   Mutation: {
-    async createExcercise(
+    async excerciseCreate(
       _: unknown,
       args: argsForCreateExcercise,
       context: { req: { headers: { authorization: string } } },
@@ -33,7 +33,7 @@ const excerciseresolvers = {
       newContext(context);
       return await createExcercise(args.input, args.workoutId);
     },
-    deleteExcercise: async (
+    excerciseDelete: async (
       _: unknown,
       args: { id: string },
       context: { req: { headers: { authorization: string } } },
@@ -42,15 +42,15 @@ const excerciseresolvers = {
       const id = args.id;
       return await deleteExcercise(id);
     },
-    updateExcercise: async (
+    excerciseUpdate: async (
       _: unknown,
       args: argsToUpdateExcercise,
       context: { req: { headers: { authorization: string } } },
     ): Promise<unknown> => {
       newContext(context);
       const id = args.input.id;
-      const { title, description, paused, pausedTime, completed } = args.input;
-      const excercise = { title, description,  paused, pausedTime, completed };
+      const { title, description,image,type} = args.input;
+      const excercise = { title, description,image,type};
       return await updateExcercise(id, excercise);
     },
   },
