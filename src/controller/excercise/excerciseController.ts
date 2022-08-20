@@ -38,7 +38,8 @@ export async function createExcercise(input: createExcerciseInput, workoutId:str
         const newExcercise = new Excercise({
         title: input.title,
         description: input.description,
-        image:input.image,
+        image:result.url,
+        type:input.type,
         createdAt: new Date().toISOString(),
       });
      
@@ -65,8 +66,36 @@ export async function deleteExcercise(id:string):Promise<unknown> {
 return response;
 }
 
-export async function  updateExcercise(id:string,excercise:updateExcerciseInput):Promise<unknown> {
+export async function  updateExcercise(id:string,input:updateExcerciseInput):Promise<unknown> {
   try {
+       //initialize cloudinary
+       cloudinary.v2.config({
+        cloud_name: process.env.CLOUDINARY_NAME,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+      });
+  
+      const result = await cloudinary.v2.uploader.upload(input.image, {
+        // only jpg and png upload
+        allowed_formats: ['jpg', 'png'],
+        //generates a new id for each uploaded image
+        public_id: '',
+        /*folder where the images are stored in the cloud
+         */
+        folder: 'decafit_folder',
+      });
+  
+      if (!result){
+       throw new Error('Image is not a valid format only jpg and png is allowed')
+      }
+        const excercise = new Excercise({
+        title: input.title,
+        description: input.description,
+        image:result.url,
+        type:input.type,
+        createdAt: new Date().toISOString(),
+      });
+     
       const updatedNew = await Excercise.findByIdAndUpdate(id,excercise,{new:true})
       if (updatedNew){
           return updatedNew

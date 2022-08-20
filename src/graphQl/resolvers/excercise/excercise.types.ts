@@ -2,7 +2,9 @@
   export interface createExcerciseInput {
     title: string;
     description: string;
-    image:string
+    image:string;
+    type:string
+
   }
   
   export interface argsForCreateExcercise {
@@ -15,10 +17,11 @@
   }
   
   export interface updateExcerciseInput {
-      id:string,
+      id:string;
       title: string;
       description: string;
-      image:string
+      image:string;
+      type:string
     }
   export interface argsToUpdateExcercise {
     input: updateExcerciseInput;

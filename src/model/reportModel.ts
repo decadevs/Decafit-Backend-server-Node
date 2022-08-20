@@ -18,7 +18,7 @@ export interface ReportType extends mongoose.Document {
 
 export const reportSchema = new mongoose.Schema(
   {
-    userID:  {type: String, required:true, unique:true },
+    userID:  {type: String, required:true, unique:true},
     workouts:  {type: mongoose.Schema.Types.Mixed}
   },
   {
