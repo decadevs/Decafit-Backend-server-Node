@@ -4,7 +4,6 @@
     description: string;
     image:string;
     type:string
-
   }
   
   export interface argsForCreateExcercise {

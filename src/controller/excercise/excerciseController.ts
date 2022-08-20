@@ -1,7 +1,9 @@
 import {  Excercise, ExerciseType} from '../../model/excerciseModel';
 import {createExcerciseInput, updateExcerciseInput} from './excercise.interface'
 import {getWorkoutById} from '../workout/workoutController'
+
 import cloudinary from 'cloudinary';
+
 
 export async function getAllExercises(): Promise<Array<ExerciseType>> {
   let data: Array<ExerciseType> = [];
@@ -47,6 +49,8 @@ export async function createExcercise(input: createExcerciseInput, workoutId:str
     if (savedExcercise) {
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const workout:any = await getWorkoutById(workoutId)
+
+
       workout.exercises.push(savedExcercise)
       workout.save();
       return  savedExcercise;

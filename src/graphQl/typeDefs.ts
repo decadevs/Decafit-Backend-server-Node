@@ -54,6 +54,7 @@ type UserRegistration {
     backgroundImage:String
     }
 
+
     enum EnumType{
       time
       count
@@ -80,6 +81,7 @@ type UserRegistration {
     description: String
     image:String
     type:EnumType
+
   }
 
 type WorkOut {
