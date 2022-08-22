@@ -40,8 +40,7 @@ export class ReportDTO{
             workoutReps: input.workoutProps[workoutId].workoutReps,
             workoutSet: input.workoutProps[workoutId].workoutSet,
             workoutTime: input.workoutProps[workoutId].workoutTime,
-            workoutCount: input.workoutProps[workoutId].workoutCount,
-            
+            workoutCount: input.workoutProps[workoutId].workoutCount,    
             exercises: ReportDTO.convertData2(input.workouts[workoutId])
         };
     }
