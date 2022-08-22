@@ -2,9 +2,11 @@ import mongoose from 'mongoose';
 interface IWorkout {
   workoutId: {
     exerciseId: {
+        exerciseId: string;
+        progress: number;
         type:string;
         paused: boolean;
-        pausedTime: string;
+        limit: string;
         completed: boolean;
     };
   };

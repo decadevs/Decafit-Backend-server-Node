@@ -106,8 +106,9 @@ input ReportExcerciseProgressInput{
   excerciseId:String
   type:EnumType
   paused: Boolean
-  pausedTime: String
+  limit: String
   completed: Boolean
+  progress: Int
 }
 
 input ReportCreateInput{
@@ -128,8 +129,9 @@ type ReportExcerciseProgress{
   excerciseId:String
   type:EnumType
   paused: Boolean
-  pausedTime: String
+  limit: String
   completed: Boolean
+  progress: Int
 }
 
 type ReportWorkout{

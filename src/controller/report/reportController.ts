@@ -2,14 +2,15 @@ import { IReport, ReportWorkoutExcercise } from '../../graphQl/resolvers/report/
 import { Report, ReportType } from '../../model/reportModel'
 import { ReportDTO } from './report.dto'
 
-const getExcercise = (input: IReport, excercises:ReportWorkoutExcercise[])=>{
+const getExcercise = (excercises:ReportWorkoutExcercise[])=>{
     return  excercises.reduce((acc,elem)=>{
        
        return {...acc,[elem.excerciseId]:{
-
+           excerciseId: elem.excerciseId,
            type:elem.type,
            paused: elem.paused,
-           pausedTime: elem.pausedTime,
+           limit: elem.limit,
+           progress: elem.progress,
           completed: elem.completed
        }
       }
@@ -20,7 +21,7 @@ function getWorkout(input: IReport){
   return {
     userID:input.userID,
     workouts:{
-        [input.workouts.workoutId]:getExcercise(input, input.workouts.exercises),
+        [input.workouts.workoutId]:getExcercise(input.workouts.exercises),
     },
     workoutProps: {
       [input.workouts.workoutId]: {
@@ -71,10 +72,11 @@ export async function getReport(userID:string):Promise<unknown>{
 export async function getReportByUserIDAndWorkoutID(userID:string, workoutID:string):Promise<IReport | null>{
     try {
      const report = await getReportByUserId(userID)
+     console.log(report);
      if (report){
-        const result = report
-        result.workouts= (report.workouts as any)[workoutID]
-       return ReportDTO.getByWorkoutID(result, workoutID);
+       const res = ReportDTO.getByWorkoutID(report, workoutID);
+       console.log('DTO', res);
+       return res;
     }
      throw Error('Report not found')
     

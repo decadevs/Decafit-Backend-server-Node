@@ -11,9 +11,8 @@ export class ReportDTO{
     }
 
     static getByWorkoutID(input:any, _workoutId:string): IReport{
-        const workoutId =  input.workouts[_workoutId];
         const userID = input.userID;
-        const workouts= ReportDTO.getWorkouts(input, workoutId);
+        const workouts= ReportDTO.getReportsWorkout(input, _workoutId);
         return {userID, workouts};
     }
 
@@ -31,30 +30,38 @@ export class ReportDTO{
             workoutSet: input.workoutProps[workoutId].workoutSet,
             workoutTime: input.workoutProps[workoutId].workoutTime,
             workoutCount: input.workoutProps[workoutId].workoutCount,
-            exercises: ReportDTO.convertData(input.workouts[workoutId])
+            exercises: ReportDTO.convertData2(input.workouts[workoutId])
         };
     }
 
     static getReportsWorkout(input:any, workoutId:string): IReportWorkoutProps{
+        console.log('input', input);
         return {
             workoutId:  workoutId,
             workoutReps: input.workoutProps[workoutId].workoutReps,
             workoutSet: input.workoutProps[workoutId].workoutSet,
             workoutTime: input.workoutProps[workoutId].workoutTime,
             workoutCount: input.workoutProps[workoutId].workoutCount,
-            exercises: ReportDTO.convertData(input.workouts[workoutId])
+            
+            exercises: ReportDTO.convertData2(input.workouts[workoutId])
         };
     }
 
     static convertData(data:IExerciseResponse ):ReportWorkoutExcercise[]{
+        console.log('data', data)
         return Object.entries(data).map(([key,value])=>{
          return {
             excerciseId: key,
             type: value.type,
             paused: value.paused,
-            pausedTime: value.pausedTime,
-            completed: value.completed
+            limit: value.limit,
+            completed: value.completed,
+            progress: value.progress,
          }
         })
+    }
+
+    static convertData2(data:IExerciseResponse ):ReportWorkoutExcercise[]{
+        return Object.values(data);
     }
 }
