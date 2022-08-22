@@ -72,10 +72,8 @@ export async function getReport(userID:string):Promise<unknown>{
 export async function getReportByUserIDAndWorkoutID(userID:string, workoutID:string):Promise<IReport | null>{
     try {
      const report = await getReportByUserId(userID)
-     console.log(report);
      if (report){
        const res = ReportDTO.getByWorkoutID(report, workoutID);
-       console.log('DTO', res);
        return res;
     }
      throw Error('Report not found')

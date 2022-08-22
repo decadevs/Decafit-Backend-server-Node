@@ -35,7 +35,6 @@ export class ReportDTO{
     }
 
     static getReportsWorkout(input:any, workoutId:string): IReportWorkoutProps{
-        console.log('input', input);
         return {
             workoutId:  workoutId,
             workoutReps: input.workoutProps[workoutId].workoutReps,
@@ -48,7 +47,6 @@ export class ReportDTO{
     }
 
     static convertData(data:IExerciseResponse ):ReportWorkoutExcercise[]{
-        console.log('data', data)
         return Object.entries(data).map(([key,value])=>{
          return {
             excerciseId: key,
