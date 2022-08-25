@@ -11,9 +11,8 @@ export class ReportDTO{
     }
 
     static getByWorkoutID(input:any, _workoutId:string): IReport{
-        const workoutId =  input.workouts[_workoutId];
         const userID = input.userID;
-        const workouts= ReportDTO.getWorkouts(input, workoutId);
+        const workouts= ReportDTO.getReportsWorkout(input, _workoutId);
         return {userID, workouts};
     }
 
@@ -31,7 +30,7 @@ export class ReportDTO{
             workoutSet: input.workoutProps[workoutId].workoutSet,
             workoutTime: input.workoutProps[workoutId].workoutTime,
             workoutCount: input.workoutProps[workoutId].workoutCount,
-            exercises: ReportDTO.convertData(input.workouts[workoutId])
+            exercises: ReportDTO.convertData2(input.workouts[workoutId])
         };
     }
 
@@ -41,8 +40,8 @@ export class ReportDTO{
             workoutReps: input.workoutProps[workoutId].workoutReps,
             workoutSet: input.workoutProps[workoutId].workoutSet,
             workoutTime: input.workoutProps[workoutId].workoutTime,
-            workoutCount: input.workoutProps[workoutId].workoutCount,
-            exercises: ReportDTO.convertData(input.workouts[workoutId])
+            workoutCount: input.workoutProps[workoutId].workoutCount,    
+            exercises: ReportDTO.convertData2(input.workouts[workoutId])
         };
     }
 
@@ -52,9 +51,14 @@ export class ReportDTO{
             excerciseId: key,
             type: value.type,
             paused: value.paused,
-            pausedTime: value.pausedTime,
-            completed: value.completed
+            limit: value.limit,
+            completed: value.completed,
+            progress: value.progress,
          }
         })
+    }
+
+    static convertData2(data:IExerciseResponse ):ReportWorkoutExcercise[]{
+        return Object.values(data);
     }
 }

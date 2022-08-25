@@ -5,8 +5,9 @@ export interface IExerciseResponse{
 export interface IExerciseProps {
     type:string;
     paused: boolean;
-    pausedTime: string;
+    limit: string;
     completed: boolean;
+    progress: number;
 }
 
 export interface WorkoutResponse{

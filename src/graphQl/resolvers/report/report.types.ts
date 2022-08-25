@@ -2,8 +2,9 @@ export interface ReportWorkoutExcercise {
   excerciseId: string;
   type: string;
   paused: boolean;
-  pausedTime: string;
+  limit: string;
   completed: boolean;
+  progress: number;
 }
 export interface IReportCreateInput {
   input: IReport;
