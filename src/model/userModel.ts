@@ -10,6 +10,7 @@ export interface UserType extends mongoose.Document {
   appleId: string;
   role: string;
   verified: boolean;
+  avatar: string,
   active: boolean;
 }
 
@@ -23,6 +24,7 @@ const userSchema = new mongoose.Schema(
     googleId: { type: String},
     appleId: { type: String },
     role: { type: String },
+    avatar: { type: String },
     verified: { type: Boolean, default: false },
   },
   {

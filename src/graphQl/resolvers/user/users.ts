@@ -1,6 +1,12 @@
-import { signUp, userSignIn, getAllUsers, getUserById } from '../../../controller/user/userController';
+import {
+  signUp,
+  userSignIn,
+  getAllUsers,
+  getUserById,
+  UpdatedUserProfile,
+} from '../../../controller/user/userController';
 import { newContext } from '../../../middlewares/check-auth';
-import { ArgsForCreateRegisterUser, ArgsForLoginUser } from './user.types';
+import { ArgsForCreateRegisterUser, ArgsForLoginUser, ArgsToUpdateProfile } from './user.types';
 
 const userResolvers = {
   Query: {
@@ -28,9 +34,23 @@ const userResolvers = {
       const res = await userSignIn(args.user);
       return res;
     },
-    async  userRegister(_: unknown, args: ArgsForCreateRegisterUser): Promise<unknown> {
+    async userRegister(_: unknown, args: ArgsForCreateRegisterUser): Promise<unknown> {
       const res = await signUp(args.user);
       return res;
+    },
+
+    profileUpdate: async (
+      _: unknown,
+      args: ArgsToUpdateProfile,
+      context: { req: { headers: { authorization: string } } },
+    ): Promise<unknown> => {
+      newContext(context);
+      const id = args.user.id;
+      const { avatar } = args.user;
+      const user = {
+        avatar,
+      };
+      return await UpdatedUserProfile(id, user);
     },
   },
 };

@@ -8,4 +8,11 @@ export interface createdLoginUserInput {
     email: string;
     password: string;
   }
+
+  export interface UpdateUserProfile {
+  // fullName: string;
+  // email: string;
+  // phoneNumber: string;
+  avatar: string,
+  }
   
