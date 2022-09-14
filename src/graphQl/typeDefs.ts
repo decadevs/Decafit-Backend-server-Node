@@ -148,6 +148,11 @@ type Report{
   workouts: ReportWorkout
 }
 
+type Report2{
+  userID: String!
+  workouts: [ReportWorkout]
+}
+
 type deletedResponse{
      message:String!
  }
@@ -160,7 +165,7 @@ type deletedResponse{
     excercises:[Excercise]!
     excercise(id: ID!):Excercise!
     reportWorkout(userID:String!, workoutID:String!):Report
-    report(userID:String!):Report
+    report(userID:String!):Report2
   }
 
   

@@ -1,4 +1,5 @@
-import { IReport, IReportWorkoutProps, ReportWorkoutExcercise } from '../../graphQl/resolvers/report/report.types';
+import { IReport, IReportWorkout, IReportWorkoutProps, ReportWorkoutExcercise } 
+from '../../graphQl/resolvers/report/report.types';
 import { IExerciseResponse } from './report.interface';
 
 export class ReportDTO{
@@ -16,12 +17,20 @@ export class ReportDTO{
         return {userID, workouts};
     }
 
-    // static getReports(input: any): IReport{
-    //     const _workouts =  Object.keys(input.workouts);
-    //     const userID = input.userID;
-    //     const workouts= ReportDTO.getReportsWorkout(input, _workouts);
-    //     return {userID, workouts};
-    // }
+    static getWorkoutsByUserId(input:any): IReportWorkout{
+        const data = Object.entries(input.workouts).map( ([workoutId, value]) => {
+            const props = input.workoutProps[workoutId];
+            return {
+                workoutId,
+                workoutReps: props.workoutReps,
+                workoutSet: props.workoutSet,
+                workoutTime: props.workoutTime,
+                workoutCount: props.workoutCount,
+                exercises: Object.values(value as any) as ReportWorkoutExcercise[]
+            }
+        });
+        return { userID: input.userID, workouts: data}
+    }
 
     static getWorkouts(input:any, workoutId:string): IReportWorkoutProps{
         return {
