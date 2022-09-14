@@ -40,9 +40,9 @@ export async function createReport(input:IReport):Promise<IReport>{
    const report = await getReportByUserId(input.userID)
    let savedReport;
    if (report) {
-    const _data = {...data};
-    _data.workouts = { ...report.workouts,..._data.workouts}
-    // _data.workoutProps = { ...report.workoutProps, ..._data.workoutProps}
+    const _data: any = {...data};
+    _data.workouts = { ...report.workouts, ..._data.workouts}
+    _data.workoutProps = { ...report.workoutProps, ..._data.workoutProps}
     console.log('update', _data)
     await Report.findOneAndUpdate({userID:report.userID},_data,{new:true})
     savedReport = data;
@@ -66,7 +66,6 @@ export async function getReport(userID:string):Promise<IReportWorkout>{
         const report = await getReportByUserId(userID)
     if (report){
        const res = ReportDTO.getWorkoutsByUserId(report)
-       console.log('query', res)
       return res;
     }
     throw new Error('Report not found')

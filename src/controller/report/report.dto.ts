@@ -26,12 +26,12 @@ export class ReportDTO{
                 workoutSet: props.workoutSet,
                 workoutTime: props.workoutTime,
                 workoutCount: props.workoutCount,
-                excercises: Object.values(value as any) as ReportWorkoutExcercise[]
+                exercises: Object.values(value as any) as ReportWorkoutExcercise[]
             }
         });
         return { userID: input.userID, workouts: data}
     }
-    
+
     static getWorkouts(input:any, workoutId:string): IReportWorkoutProps{
         return {
             workoutId:  workoutId,

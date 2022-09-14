@@ -24,7 +24,7 @@ export interface IReportWorkoutsProps2 {
   workoutSet: number;
   workoutTime: string;
   workoutCount: number;
-  excercises: ReportWorkoutExcercise[];
+  exercises: ReportWorkoutExcercise[];
 }
 
 export interface IReportWorkoutProps extends IReportWorkoutSubProps{
