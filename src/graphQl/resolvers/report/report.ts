@@ -9,7 +9,7 @@ const reportResolver = {
             args:any,
             context: { req: { headers: { authorization: string } } },
           ): Promise<unknown> => {
-            newContext(context);
+            // newContext(context);
             const res = await getReport(args.userID);
             return res;
           },
@@ -18,7 +18,7 @@ const reportResolver = {
             args:any,
             context: { req: { headers: { authorization: string } } },
           ): Promise<unknown> => {
-            newContext(context);
+            // newContext(context);
             const res = await getReportByUserIDAndWorkoutID(args.userID, args.workoutID);
             return res;
           },
@@ -26,7 +26,7 @@ const reportResolver = {
     Mutation:{
         async reportCreate(_:unknown, args:IReportCreateInput,  
             context: { req: { headers: { authorization: string } } }):Promise<unknown>{
-                newContext(context);
+                // newContext(context);
                 return createReport(args.input)
         }
     }
