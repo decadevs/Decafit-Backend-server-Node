@@ -1,8 +1,26 @@
  ## DECAFIT BACKEND SERVER
 
- ### Requirements
+ ### TECHNOLOGIES
 
-```
-node v14.17.5
-npm v6.14.14
-```
+ - Node js
+
+ - GraphQL
+
+ - MongoDB
+
+ - Typescript
+
+ - Docker
+
+ - Cloudinary
+
+ - Github actions for ci/cd
+
+ - Heroku for deployment
+
+
+### DOCUMENTATION
+
+- https://decagon-decafit-api.herokuapp.com/decafit
+
+
