@@ -6,6 +6,8 @@ type UserRegistration {
     email: String!
     phoneNumber: String!
     message: String!
+    createdAt: String
+    updatedAt: String
   }
   
   type UserLogin {
@@ -14,6 +16,7 @@ type UserRegistration {
     email: String!
     phoneNumber: String!
     createdAt: String
+    updatedAt: String
     message: String!
     token: String
   }
@@ -24,6 +27,7 @@ type UserRegistration {
     phoneNumber: String!
     email: String!
     createdAt: String
+    updatedAt: String
   }
 
   type UserProfile {
@@ -80,6 +84,8 @@ type UserRegistration {
     description: String!
     image:String!
     type:EnumType!
+    createdAt: String
+    updatedAt: String
   }
 
   input ExcerciseInput {
@@ -106,6 +112,7 @@ type WorkOut {
   reps: Int
   exercises:[Excercise]
   createdAt:String
+  updatedAt: String
 }
 
 type ProgressExerciseInfo {
@@ -160,11 +167,15 @@ type ReportWorkout{
 type Report{
   userID: String!
   workouts: ReportWorkout
+  createdAt: String
+  updatedAt: String
 }
 
 type Report2{
   userID: String!
   workouts: [ReportWorkout]
+  createdAt: String
+  updatedAt: String
 }
 
 type deletedResponse{
