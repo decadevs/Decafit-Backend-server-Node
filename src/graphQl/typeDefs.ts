@@ -28,6 +28,7 @@ type UserRegistration {
     email: String!
     createdAt: String
     updatedAt: String
+
   }
 
   type UserProfile {
