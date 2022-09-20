@@ -56,7 +56,11 @@ export async function createReport(input:IReport):Promise<IReport>{
 
  async function getReportByUserId(userID:string):Promise<ReportType | null>{
     try {
-    return  Report.findOne({userID});
+      const report =Report.findOne({userID});
+      if (report){
+        return report
+      }
+      throw Error('Report not found')
     } catch (error) {
       throw new Error('Internal server Error');
     }

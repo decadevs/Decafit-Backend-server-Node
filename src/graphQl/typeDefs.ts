@@ -28,6 +28,21 @@ type UserRegistration {
     email: String!
     createdAt: String
     updatedAt: String
+
+  }
+
+  type UserProfile {
+    id: ID!
+    fullName: String!
+    email: String!
+    phoneNumber: String!
+    avatar:String!
+    createdAt: String
+  }
+
+  input UserProfileInput {
+    id: ID!
+    avatar:String!
   }
   
   input RegisterInput {
@@ -183,6 +198,7 @@ type deletedResponse{
   type Mutation {
     userRegister(user: RegisterInput): UserRegistration!
     userLogin(user: LoginInput): UserLogin!
+    profileUpdate(user:UserProfileInput):UserProfile!
     workoutCreate(input:WorkoutInput):WorkOut!
     workoutUpdate(input:UpdateWorkoutInput):WorkOut!
     workoutDelete(id:ID!):deletedResponse!

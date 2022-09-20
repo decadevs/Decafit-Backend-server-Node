@@ -3,10 +3,10 @@ import { Request, Response } from 'express';
 import { User, UserType } from '../../model/userModel';
 import { UserInputError } from 'apollo-server-express';
 import jwt, { JwtPayload } from 'jsonwebtoken';
+import cloudinary from 'cloudinary';
 import { generateToken, registerSchema, options, loginSchema } from '../../utils/utils';
 import { emailVerificationView } from '../../ts/email-verification';
-//import { passwordResetView } from '../../ts/password-reset';
-import { createdLoginUserInput, createUserInput } from './user.interface';
+import { createdLoginUserInput, createUserInput, UpdateUserProfile } from './user.interface';
 import { IEmailRequest } from '../../interfaces/email.type';
 import { getEmitter } from '../../events/emitter';
 import { AppEvents } from '../../events/events';
@@ -15,7 +15,7 @@ const jwtsecret = process.env.JWT_SECRET as string;
 
 export async function getUser(req: Request, res: Response): Promise<unknown> {
   const user = await User.find();
-  if (user) return res.status(200).json(user)
+  if (user) return res.status(200).json(user);
 }
 
 export async function getAllUsers(): Promise<Array<UserType>> {
@@ -84,7 +84,7 @@ export async function signUp(user: createUserInput): Promise<unknown> {
       to: user.email,
       subject: 'Please verify your email!',
       message: html,
-    } 
+    };
     getEmitter().emit(AppEvents.EMAIL_START, emailRequest);
 
     return {
@@ -158,16 +158,55 @@ export async function userSignIn(user: createdLoginUserInput): Promise<unknown> 
   }
 }
 
+// Update Profile
+export async function UpdatedUserProfile(id: string, user: UpdateUserProfile): Promise<unknown> {
+  try {
+    //initialize cloudinary
+    cloudinary.v2.config({
+      cloud_name: process.env.CLOUDINARY_NAME,
+      api_key: process.env.CLOUDINARY_API_KEY,
+      api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
+    const result = await cloudinary.v2.uploader.upload(user.avatar, {
+      // only jpg and png upload
+      allowed_formats: ['jpg', 'png'],
+      //generates a new id for each uploaded image
+      public_id: '',
+      /*folder where the images are stored in the cloud
+       */
+      folder: 'decafit_folder',
+    });
+
+    if (!result) {
+      throw new Error('Image is not a valid format only jpg and png is allowed');
+    }
+
+    const updateUser = {
+      avatar: result.url,
+    };
+
+    const updatedNew = await User.findByIdAndUpdate(id, updateUser, { new: true });
+
+    if (updatedNew) {
+      return updatedNew;
+    } else {
+      throw new Error('Cannot update profile');
+    }
+  } catch (err) {
+    throw new Error(`${err}`);
+  }
+}
+
 // SSO PASSPORT ROUTE CONTROLLER
 export async function loginSuccess(req: Request, res: Response): Promise<void> {
   try {
     if (req && req.user) {
       const { _id, email } = req.user as { [key: string]: string };
-    const token = generateToken({ _id, email });
-    res.status(200).json({
-      message: 'Login sucessful',
-      token: token,
-    });
+      const token = generateToken({ _id, email });
+      res.status(200).json({
+        message: 'Login sucessful',
+        token: token,
+      });
     }
   } catch (err) {
     throw new Error(`${err}`);
