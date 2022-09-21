@@ -140,6 +140,7 @@ input ReportCreateInput{
 
 input ReportWorkoutInput{
   workoutId:String!
+  workoutName:String
   workoutReps: Int!
   workoutSet: Int!
   workoutTime: String!
@@ -158,6 +159,7 @@ type ReportExcerciseProgress{
 
 type ReportWorkout{
   workoutId:String!
+  workoutName: String
   workoutReps: Int!
   workoutSet: Int!
   workoutTime: String!

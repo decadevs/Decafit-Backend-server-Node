@@ -25,6 +25,8 @@ export interface ReportType extends mongoose.Document {
   userID: string;
   workouts: IWorkout;
   workoutProps: IWorkoutProps;
+  createdAt: string;
+  updatedAt: string;
 }
 
 export const reportSchema = new mongoose.Schema(

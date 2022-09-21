@@ -22,6 +22,7 @@ export class ReportDTO{
             const props = input.workoutProps[workoutId];
             return {
                 workoutId,
+                workoutName: props.workoutName,
                 workoutReps: props.workoutReps,
                 workoutSet: props.workoutSet,
                 workoutTime: props.workoutTime,
@@ -35,6 +36,7 @@ export class ReportDTO{
     static getWorkouts(input:any, workoutId:string): IReportWorkoutProps{
         return {
             workoutId:  workoutId,
+            workoutName:  input.workoutProps[workoutId].workoutName,
             workoutReps: input.workoutProps[workoutId].workoutReps,
             workoutSet: input.workoutProps[workoutId].workoutSet,
             workoutTime: input.workoutProps[workoutId].workoutTime,
@@ -46,6 +48,7 @@ export class ReportDTO{
     static getReportsWorkout(input:any, workoutId:string): IReportWorkoutProps{
         return {
             workoutId:  workoutId,
+            workoutName:  input.workoutProps[workoutId].workoutName,
             workoutReps: input.workoutProps[workoutId].workoutReps,
             workoutSet: input.workoutProps[workoutId].workoutSet,
             workoutTime: input.workoutProps[workoutId].workoutTime,
