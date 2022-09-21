@@ -25,6 +25,7 @@ function getWorkout(input: IReport){
     },
     workoutProps: {
       [input.workouts.workoutId]: {
+        workoutName: input.workouts.workoutName,
         workoutReps: input.workouts.workoutReps,
         workoutSet: input.workouts.workoutSet,
         workoutTime: input.workouts.workoutTime,
@@ -32,6 +33,14 @@ function getWorkout(input: IReport){
       }
     }
  }
+}
+
+function addTimeStamp(data: any, report: ReportType | null) {
+  if (report) { 
+    data.createdAt = report.createdAt;
+    data.updatedAt = report.updatedAt;
+  }
+  return data;
 }
 
 export async function createReport(input:IReport):Promise<IReport>{
@@ -44,14 +53,16 @@ export async function createReport(input:IReport):Promise<IReport>{
     _data.workouts = { ...report.workouts, ..._data.workouts}
     _data.workoutProps = { ...report.workoutProps, ..._data.workoutProps}
     console.log('update', _data)
-    await Report.findOneAndUpdate({userID:report.userID},_data,{new:true})
-    savedReport = data;
+    savedReport = await Report.findOneAndUpdate({userID:report.userID},_data,{new:true})
+    // savedReport.createdAt = Date.now();
+    console.log('update', savedReport);
    } else {
-    console.log('create', data);
      savedReport = await Report.create(data)
+    //  console.log('create', data);
    }
   const response =  ReportDTO.get(savedReport)
-   return response
+   
+   return addTimeStamp(response, savedReport);
 }
 
  async function getReportByUserId(userID:string):Promise<ReportType | null>{
@@ -69,8 +80,7 @@ export async function getReport(userID:string):Promise<IReportWorkout>{
     try {
         const report = await getReportByUserId(userID)
     if (report){
-       const res = ReportDTO.getWorkoutsByUserId(report)
-      return res;
+       return addTimeStamp(ReportDTO.getWorkoutsByUserId(report), report);
     }
     throw new Error('Report not found')
     } catch (err) {
@@ -83,7 +93,7 @@ export async function getReportByUserIDAndWorkoutID(userID:string, workoutID:str
      const report = await getReportByUserId(userID)
      if (report){
        const res = ReportDTO.getByWorkoutID(report, workoutID);
-       return res;
+       return addTimeStamp(res, report);
     }
      throw Error('Report not found')
     

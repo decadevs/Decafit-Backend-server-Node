@@ -12,6 +12,7 @@ export interface IReportCreateInput {
 
 export interface IReportWorkoutSubProps {
   workoutId: string;
+  workoutName: string;
   workoutReps: string;
   workoutSet: number;
   workoutTime: string;
@@ -20,6 +21,7 @@ export interface IReportWorkoutSubProps {
 
 export interface IReportWorkoutsProps2 {
   workoutId: string;
+  workoutName: string;
   workoutReps: string;
   workoutSet: number;
   workoutTime: string;
